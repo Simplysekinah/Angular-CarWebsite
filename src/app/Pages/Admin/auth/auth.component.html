@@ -1,0 +1,205 @@
+<!-- <p class="text-lg text-center mt-10 font-semibold text-gray-700">
+  Book & Manage Your Car Rentals with Ease
+</p> -->
+
+<div
+  class="relative mx-auto mt-6 max-w-[900px] max-lg:w-full h-[530px] bg-white shadow-lg rounded-lg overflow-hidden flex md:flex-row"
+>
+  <!-- Left Side - Forms -->
+  <div class="md:w-1/2 w-full relative overflow-hidden">
+    <!-- Sign Up Form -->
+
+    <div
+      class="absolute inset-0 flex flex-col items-center justify-center px-8 py-6 transition-transform duration-500 ease-in-out"
+      [ngClass]="{
+        'translate-x-full':
+          showLogin,
+        'translate-x-0':
+          !showLogin
+      }"
+    >
+      <form action="" [formGroup]="SignupForm" (ngSubmit)="onSubmit()">
+        <h2 class="text-2xl font-bold text-gray-700">Join RideEase</h2>
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            id="floating_fullname"
+            name="fullname"
+            formControlName="fullname"
+            class="peer block w-full border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-green-500 focus:ring-0"
+            placeholder=" "
+            required
+          />
+          <label
+            for="floating_name"
+            class="absolute top-3 text-sm text-gray-500 duration-300 transform scale-75 -translate-y-6 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-600"
+            >Full Name</label
+          >
+          <div class="text-red-600">
+            @if (SignupForm.controls['fullname'].errors?.['required'] &&
+            SignupForm.controls['fullname'].touched) {
+            <span>This is required</span>
+            }
+          </div>
+        </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            id="floating_email"
+            name="email"
+            formControlName="email"
+            class="peer block w-full border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-green-500 focus:ring-0"
+            placeholder=" "
+            required
+          />
+          <label
+            for="floating_email"
+            class="absolute top-3 text-sm text-gray-500 duration-300 transform scale-75 -translate-y-6 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-600"
+            >Email</label
+          >
+          <div class="text-red-600">
+            @if (SignupForm.controls['email'].errors?.['required'] &&
+            SignupForm.controls['email'].touched) {
+            <span>This is required</span>
+            }
+          </div>
+        </div>
+        <!-- Missing closing div tag added here -->
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            id="floating_password"
+            name="password"
+            formControlName="password"
+            class="peer block w-full border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-green-500 focus:ring-0"
+            placeholder=" "
+            required
+          />
+          <label
+            for="floating_password"
+            class="absolute top-3 text-sm text-gray-500 duration-300 transform scale-75 -translate-y-6 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-600"
+            >Password</label
+          >
+          <div class="text-red-600">
+            @if (SignupForm.controls['password'].errors?.['required'] &&
+            SignupForm.controls['password'].touched) {
+            <span>This is required</span>
+            }
+          </div>
+        </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            formControlName="username"
+            name="username"
+            id="floating_username"
+            class="peer block w-full border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-green-500 focus:ring-0"
+            placeholder=" "
+            required
+          />
+          <label
+            for="floating_username"
+            class="absolute top-3 text-sm text-gray-500 duration-300 transform scale-75 -translate-y-6 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-600"
+            >Confirm-Password</label
+          >
+          <div class="text-red-600">
+            @if (SignupForm.controls['username'].errors?.['required'] &&
+            SignupForm.controls['username'].touched) {
+            <span>This is required</span>
+            }
+          </div>
+        </div>
+        <button
+          class="mt-6 w-64 py-2 bg-green-500 text-white rounded-full uppercase"
+          [disabled]="SignupForm.invalid"
+        >
+          {{ SignupForm.invalid }}
+          Sign Up
+        </button>
+        <p
+          class="mt-6 text-sm text-gray-500 cursor-pointer hover:text-gray-700"
+          (click)="toggleForm()"
+        >
+          Already have an account? <span class="text-blue-500">Sign In</span>
+        </p>
+      </form>
+    </div>
+
+    <!-- Login Form -->
+    <div
+      class="absolute inset-0 flex flex-col items-center justify-center px-8 py-6 transition-transform duration-500 ease-in-out transform translate-x-full"
+      [ngClass]="{ 'translate-x-0': showLogin, 'translate-x-full': !showLogin }"
+    >
+      <form action="" [formGroup]="LoginForm" (ngSubmit)="onLogin()">
+        <h2 class="text-2xl font-bold text-gray-700">Welcome Back!</h2>
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            id="floating_email"
+            name="email"
+            formControlName="email"
+            class="peer block w-full border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-green-500 focus:ring-0"
+            placeholder=" "
+            required
+          />
+          <label
+            for="floating_email"
+            class="absolute top-3 text-sm text-gray-500 duration-300 transform scale-75 -translate-y-6 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-600"
+            >Email</label
+          >
+          <div class="text-red-600">
+            @if (SignupForm.controls['email'].errors?.['required'] &&
+            SignupForm.controls['email'].touched) {
+            <span>This is required</span>
+            }
+          </div>
+        </div>
+        <div class="relative z-0 w-full mb-5 group">
+          <input
+            type="text"
+            id="floating_password"
+            name="password"
+            formControlName="password"
+            class="peer block w-full border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-sm text-gray-900 focus:border-green-500 focus:ring-0"
+            placeholder=" "
+            required
+          />
+          <label
+            for="floating_password"
+            class="absolute top-3 text-sm text-gray-500 duration-300 transform scale-75 -translate-y-6 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-600"
+            >Password</label
+          >
+          <div class="text-red-600">
+            @if (SignupForm.controls['password'].errors?.['required'] &&
+            SignupForm.controls['password'].touched) {
+            <span>This is required</span>
+            }
+          </div>
+        </div>
+        <button
+          class="mt-6 w-64 py-2 bg-blue-500 text-white rounded-full uppercase"
+          [disabled]="LoginForm.invalid"
+        >
+          Sign In
+        </button>
+        <p
+          class="mt-6 text-sm text-gray-500 cursor-pointer hover:text-gray-700"
+          (click)="toggleForm()"
+        >
+          New here? <span class="text-green-500">Create Account</span>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right Side - Image -->
+  <div
+    class="md:w-1/2 w-full bg-gray-200 justify-center items-center p-3 hidden md:flex bg-img"
+  >
+    <img
+      src="car-bg.jpg"
+      alt="Car Rental"
+      class="w-[100%] h-full rounded-l-lg shadow-lg"
+    />
+  </div>
+</div>

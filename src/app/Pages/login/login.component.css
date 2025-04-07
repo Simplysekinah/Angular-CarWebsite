@@ -1,0 +1,12 @@
+input {
+  border-bottom: 2px solid rgba(0,0,0,0.4);
+  padding-bottom: 5px;
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.8;
+}

@@ -1,0 +1,80 @@
+<form  [formGroup]="UploadForm" (ngSubmit)="uploadProduct()">
+  <h2>Upload Product</h2>
+  <div>
+    <label for="category">Select Category:</label>
+    <select  required formControlName="category">
+      <option value="bus">Bus</option>
+      <option value="car">Car</option>
+      <option value="bike">Bike</option>
+    </select>
+    <div class="text-red-600">
+      @if (UploadForm.controls['category'].invalid &&
+      UploadForm.controls['category'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+  <div>
+    <label>Title:</label>
+    <input type="text" name="title" formControlName="title"  required />
+    <div class="text-red-600">
+      @if (UploadForm.controls['title'].invalid &&
+      UploadForm.controls['title'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+
+  <div>
+    <label>Description:</label>
+    <textarea  required name="description" formControlName="description"></textarea>
+    <div class="text-red-600">
+      @if (UploadForm.controls['description'].invalid &&
+      UploadForm.controls['description'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+  <div>
+    <label>Price:</label>
+    <input type="number" name="price" formControlName="price" required />
+    <div class="text-red-600">
+      @if (UploadForm.controls['price'].invalid &&
+      UploadForm.controls['price'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+  <div>
+    <label>Color:</label>
+    <input type="text" name="color" formControlName="color"  required />
+    <div class="text-red-600">
+      @if (UploadForm.controls['color'].invalid &&
+      UploadForm.controls['color'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+  <div>
+    <label>Availability:</label>
+    <input type="checkbox" name="availability" formControlName="availability"  />
+    <div class="text-red-600">
+      @if (UploadForm.controls['availability'].invalid &&
+      UploadForm.controls['availability'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+  <div>
+    <label>Upload Images:</label>
+    <input type="file" name="image" (change)="onFileSelected($event)" required />
+    <div class="text-red-600">
+      @if (UploadForm.controls['image'].invalid &&
+      UploadForm.controls['image'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+
+  <button [disabled]="!UploadForm.valid" class="bg-red-500">Upload Product</button>
+</form>
