@@ -6,10 +6,10 @@ const CreateProducts = async (request, response) => {
   try {
     // console.log(request.body,'body');
     // console.log(request.image);
-    const { title, price, description, category, availability, color,image } =
+    const { name,type,fuelCapacity,steering,capacity, price,available, description,reviews,category,image } =
       request.body;
     // console.log(
-    //   title,
+    //   name,type,fuelCapacity,steering,capacity,
     //   price,
     //   description,
     //   category,
@@ -20,7 +20,7 @@ const CreateProducts = async (request, response) => {
     // console.log(image)
     // const image = request.file;
     
-    const validateCategory = ["bus", "car", "bike"];
+    const validateCategory = ['popular', 'recommendation'];
     if (!validateCategory.includes(category)) {
       return response.status(400).send({ message: "Invalid Category" });
     }
@@ -34,14 +34,17 @@ const CreateProducts = async (request, response) => {
     console.log(imageUrl)
 
     const product = await ProductModel.create({
-      title,
+      name,
+      type,
+      fuelCapacity,
+      steering,
+      capacity,
       price,
+      available: available !== undefined ? available : true,
       description,
+      reviews,
       category,
-      availability,
-      color,
       image: imageUrl,
-      availability: availability !== undefined ? availability : true,
     });
     await product.save();
     response.status(201).send({ product, message: "Product Created" });
@@ -63,16 +66,31 @@ const getAllProducts = async (request, response) => {
   }
 };
 
-const getAllProductsbyCategory = async (request, require) => {
-  const { category } = request.params;
+const getAllProductsbyCategory = async (request, response) => {
   try {
-    const products = await ProductModel.find({ category: category });
+    const { category } = request.params;
+    // console.log(category)
+    console.log(ProductModel);
+    const products = await ProductModel.find({ category:category });
+    // console.log(products,'pro');
     response.status(200).send({ products });
   } catch (error) {
     console.log(error);
   }
 };
-const updateProducts = async (request, require) => {
+const getAllProductsbyId = async (request, response) => {
+  try {
+    const { _id } = request.params;
+    console.log(_id)
+    // console.log(ProductModel);
+    const products = await ProductModel.findById({_id});
+    console.log(products,'id');
+    response.status(200).send({ products });
+  } catch (error) {
+    console.log(error);
+  }
+};
+const updateProducts = async (request, response) => {
   try {
     const { id } = request.params;
     const updateData = request.body;
@@ -100,7 +118,7 @@ const updateProducts = async (request, require) => {
   }
 };
 
-const deleteProducts = async (request, require) => {
+const deleteProducts = async (request, response) => {
   try {
     const { id } = request.params;
     const deletedProduct = await ProductModel.findByIdAndDelete(id);
@@ -119,6 +137,7 @@ module.exports = {
   CreateProducts,
   getAllProducts,
   getAllProductsbyCategory,
+  getAllProductsbyId,
   updateProducts,
   deleteProducts,
 };

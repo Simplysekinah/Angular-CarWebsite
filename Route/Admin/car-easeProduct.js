@@ -2,7 +2,7 @@ const express = require('express');
 const { adminSignup, adminSignin, tokenverification } = require('../../Controller/AdminAuth/AdminController');
 const { adminValidator, adminPageValidator } = require('../../Middleware/Admin/adminValidate');
 const {validate} =require('../../Middleware/Admin/adminValidator');
-const { CreateProducts, getAllProducts, getAllProductsbyCategory, updateProducts, deleteProducts } = require('../../Controller/Product/productController');
+const { CreateProducts, getAllProducts, getAllProductsbyCategory,getAllProductsbyId, updateProducts, deleteProducts } = require('../../Controller/Product/productController');
 
 const Router =express.Router()
 
@@ -12,6 +12,7 @@ Router.get('/dashboard',tokenverification)
 Router.post('/createProduct',CreateProducts)
 Router.get('/getProduct',getAllProducts)
 Router.get('/getProduct/:category',getAllProductsbyCategory)
+Router.get('/getProductbyid/:_id',getAllProductsbyId)
 Router.get('/updateProduct/:id',updateProducts)
 Router.get('/deleteProduct/:id',deleteProducts)
 
