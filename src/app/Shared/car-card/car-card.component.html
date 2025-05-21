@@ -1,0 +1,29 @@
+<div class="max-w-sm rounded-lg shadow-lg bg-white p-5" (click)="selectCar()">
+    <ng-container *ngIf="car; else loading">
+        <img [src]="car.image" alt="{{ car.name }}" class="w-full h-48 object-cover rounded-md">
+
+        <h2 class="text-xl font-semibold mt-3">{{ car.name }}</h2>
+
+        <div class="text-gray-600 text-sm mt-2">
+            <p><strong>Fuel Capacity:</strong> {{ car.fuelCapacity }} L</p>
+            <p><strong>Transmission:</strong> {{ car.transmission }}</p>
+            <p><strong>Seats:</strong> {{ car.seats }}</p>
+            <p><strong>Price:</strong> ${{ car.price }} per day</p>
+        </div>
+
+        <button class="mt-4 w-full bg-orange-500 text-white py-2 rounded hover:bg-orange-600 transition">
+            Rent Now
+        </button>
+    </ng-container>
+
+    <ng-template #loading>
+        <div class="animate-pulse">
+            <div class="w-full h-48 bg-gray-300 rounded-md"></div>
+            <div class="mt-3 h-6 bg-gray-300 rounded"></div>
+            <div class="mt-2 h-4 bg-gray-300 rounded"></div>
+            <div class="mt-2 h-4 bg-gray-300 rounded"></div>
+            <div class="mt-2 h-4 bg-gray-300 rounded"></div>
+            <div class="mt-4 h-10 bg-gray-400 rounded"></div>
+        </div>
+    </ng-template>
+</div>

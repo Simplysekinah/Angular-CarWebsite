@@ -1,1 +1,43 @@
-<p>dashboard works!</p>
+<main class="p-4">
+    <header class="flex justify-evenly gap-5">
+        <app-hero-banner [imageUrl]="carImg" [backgroundImage]="backImg" (rentalClick)="onClickRent()">
+            <ng-container hero-title>
+                <h1 class="text-3xl font-bold md:text-2xl leading-snug">The Best Platform for Car Rental</h1>
+            </ng-container>
+
+            <ng-container hero-description>
+                <p class="text-lg font-medium md:text-xl">Ease of doing a car rental safely and reliably. Of course at a
+                    low price.</p>
+            </ng-container>
+
+            <ng-container hero-button>
+                <button class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded" (click)="onClickRent()">
+                    Rent a Car
+                </button>
+            </ng-container>
+        </app-hero-banner>
+        <app-hero-banner [imageUrl]="carImgs" [backgroundImage]="backImgs" (rentalClick)="onClickRent()">
+            <ng-container hero-title>
+                <h1 class="text-3xl font-bold md:text-2xl leading-snug">Easy way to rent a car at low price</h1>
+            </ng-container>
+
+            <ng-container hero-description>
+                <p class="text-lg font-medium md:text-xl">Providing cheap car rental services and safe and comfortable
+                    facilities.</p>
+            </ng-container>
+
+            <ng-container hero-button>
+                <button class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded" (click)="onClickRent()">
+                    Rent a Car
+                </button>
+            </ng-container>
+        </app-hero-banner>
+    </header>
+    <section>
+        <ng-container *ngFor="let car of carData">
+            <app-car-card [car]="car" (carSelected)="handleCarSelection($event)"></app-car-card>
+        </ng-container>
+
+        <!-- <app-car-card *ngIf="carData" [car]="carData"></app-car-card> -->
+    </section>
+</main>

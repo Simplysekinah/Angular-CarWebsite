@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   success = '';
   token:string = localStorage.getItem('token') || '';
-  constructor(private service: AuthService, private FB: FormBuilder, private router:Router) {
+  constructor(private service: AuthService, private FB:FormBuilder, private router:Router) {
     console.log('Saved Token:', this.token);
     // this.onSubmit();
    }
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       reset: ['', [Validators.required, Validators.minLength(8)]],
     });
-    this.onDashboard();
+    // this.onDashboard();
 
   }
 
@@ -89,8 +89,8 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    console.log('first')
-    console.log(this.LoginForm.value);
+    // console.log('first')
+    // console.log(this.LoginForm.value);
     this.submitted = true;
     // console.log(this.service.Signup(this.SignupForm.value));
 
@@ -213,7 +213,7 @@ export class LoginComponent implements OnInit {
     let token = localStorage.getItem('token');
     if(token){
       this.service.getUserData().subscribe((response)=>{
-        console.log(response)
+        console.log(response);
         this.router.navigate(['/dashboard'])
       },
       (error) => {

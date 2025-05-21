@@ -1,5 +1,7 @@
 
 import { admin, main } from "../Utils/api"
+const categoryP ='popular';
+const categoryR ='recommendation';
 export const api = {
   signup: `${main}/signup`,
   signin: `${main}/signin`,
@@ -14,7 +16,9 @@ export const adminapi={
   dashboard: `${admin}/dashboard`,
   createproduct: `${admin}/createProduct`,
   getproducts: `${admin}/getProduct`,
-  getbycategory: `${admin}/getProduct/:category`,
+  getbycategory: `${admin}/getProduct/${categoryP}`,
+  getbycategorys: `${admin}/getProduct/${categoryR}`,
+  getbyid: `${admin}/getProductbyid/`,
   updateproduct:`${admin}/updateProduct/:id`,
   deleteproduct:`${admin}/deleteProduct/:id`
 }

@@ -28,17 +28,25 @@ export class UploadProductComponent {
     private router: Router,
     private FB: FormBuilder,
     private service: ProductService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.UploadForm = this.FB.group({
-      title: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      type: ['', [Validators.required]],
+      fuelCapacity: ['', [Validators.required]],
+      steering: ['', [Validators.required]],
+      capacity: ['', [Validators.required]],
       price: ['', [Validators.required]],
+      availability: [false],
       description: ['', [Validators.required, Validators.minLength(3)]],
-      category: ['', [Validators.required]],
-      availability: [false], // Checkbox should have `false` as default
-      color: ['', [Validators.required]],
-      image: [null, [Validators.required]], // Set image to null initially
+      reviews: this.FB.group({
+        user: ['', [Validators.required]],
+        rating: [0, [Validators.required, Validators.min(1), Validators.max(5)]],
+        comment: ['', [Validators.required]]
+      }),
+      category: ['', [Validators.required, Validators.minLength(3)]],
+      image: [null, [Validators.required]]
     });
   }
 
@@ -68,12 +76,17 @@ export class UploadProductComponent {
 
 
   uploadProduct() {
+    console.log('object');
     this.submitted = true;
-    if (this.UploadForm.invalid) {
+    if (this.UploadForm.valid) {
       return;
     }
+    console.log(this.UploadForm);
     this.UploadForm.value.image = this.selectedFile
-      console.log(this.UploadForm.value)
+    // this.UploadForm.patchValue({
+    //   image: this.selectedFile
+    // });
+    console.log(this.UploadForm.value)
     this.service.CreateProducts(this.UploadForm.value).subscribe(
       (response) => {
         console.log('Product uploaded successfully:', response);

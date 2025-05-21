@@ -1,11 +1,10 @@
-<form  [formGroup]="UploadForm" (ngSubmit)="uploadProduct()">
+<form [formGroup]="UploadForm" (ngSubmit)="uploadProduct()">
   <h2>Upload Product</h2>
   <div>
     <label for="category">Select Category:</label>
-    <select  required formControlName="category">
-      <option value="bus">Bus</option>
-      <option value="car">Car</option>
-      <option value="bike">Bike</option>
+    <select required formControlName="category">
+      <option value="popular">popular</option>
+      <option value="recommendation">recommendation</option>
     </select>
     <div class="text-red-600">
       @if (UploadForm.controls['category'].invalid &&
@@ -15,22 +14,75 @@
     </div>
   </div>
   <div>
-    <label>Title:</label>
-    <input type="text" name="title" formControlName="title"  required />
+    <label>Name:</label>
+    <input type="text" name="name" formControlName="name" required />
     <div class="text-red-600">
-      @if (UploadForm.controls['title'].invalid &&
-      UploadForm.controls['title'].touched) {
+      @if (UploadForm.controls['name'].invalid &&
+      UploadForm.controls['name'].touched) {
       <span>This is required</span>
       }
     </div>
   </div>
-
   <div>
-    <label>Description:</label>
-    <textarea  required name="description" formControlName="description"></textarea>
+    <label>Type:</label>
+    <!-- <input type="text" name="type" formControlName="type" required /> -->
+    <select required formControlName="type">
+      <option value="Sport">sport</option>
+      <option value="SUV">SUV</option>
+      <option value="MPV">MPV</option>
+      <option value="Sedan">Sedan</option>
+      <option value="Sport">Sport</option>
+      <option value="Coupe">Coupe</option>
+      <option value="Hatchback">Hatchback</option>
+    </select>
     <div class="text-red-600">
-      @if (UploadForm.controls['description'].invalid &&
-      UploadForm.controls['description'].touched) {
+      @if (UploadForm.controls['type'].invalid &&
+      UploadForm.controls['type'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+  <div>
+    <label>fuelCapacity:</label>
+    <!-- <input type="text" name="fuelCapacity" formControlName="fuelCapacity" required /> -->
+    <select required formControlName="fuelCapacity">
+      <option value="90L">90L</option>
+      <option value="80L">80L</option>
+      <option value="70L">70L</option>
+    </select>
+    <div class="text-red-600">
+      @if (UploadForm.controls['fuelCapacity'].invalid &&
+      UploadForm.controls['fuelCapacity'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+  <div>
+    <label>steering:</label>
+    <!-- <input type="text" name="steering" formControlName="steering" required /> -->
+    <select required formControlName="steering">
+      <option value="Automatic">Automatic</option>
+      <option value="Manual">Manual</option>
+    </select>
+    <div class="text-red-600">
+      @if (UploadForm.controls['steering'].invalid &&
+      UploadForm.controls['steering'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+  <div>
+    <label>capacity:</label>
+    <!-- <input type="text" name="capacity" formControlName="capacity" required /> -->
+    <select required formControlName="capacity">
+      <option value="2 people">2people</option>
+      <option value="4 people">4people</option>
+      <option value="6 people">6people</option>
+      <option value="8 or More">8 or More</option>
+    </select>
+    <div class="text-red-600">
+      @if (UploadForm.controls['capacity'].invalid &&
+      UploadForm.controls['capacity'].touched) {
       <span>This is required</span>
       }
     </div>
@@ -46,18 +98,8 @@
     </div>
   </div>
   <div>
-    <label>Color:</label>
-    <input type="text" name="color" formControlName="color"  required />
-    <div class="text-red-600">
-      @if (UploadForm.controls['color'].invalid &&
-      UploadForm.controls['color'].touched) {
-      <span>This is required</span>
-      }
-    </div>
-  </div>
-  <div>
     <label>Availability:</label>
-    <input type="checkbox" name="availability" formControlName="availability"  />
+    <input type="checkbox" name="availability" formControlName="availability" />
     <div class="text-red-600">
       @if (UploadForm.controls['availability'].invalid &&
       UploadForm.controls['availability'].touched) {
@@ -65,6 +107,27 @@
       }
     </div>
   </div>
+  <div>
+    <label>Description:</label>
+    <textarea required name="description" formControlName="description"></textarea>
+    <div class="text-red-600">
+      @if (UploadForm.controls['description'].invalid &&
+      UploadForm.controls['description'].touched) {
+      <span>This is required</span>
+      }
+    </div>
+  </div>
+  <!-- <div formGroupName="reviews">
+    <label>User</label>
+    <input formControlName="user" type="text" class="form-control" />
+
+    <label>Rating</label>
+    <input formControlName="rating" type="number" min="1" max="5" class="form-control" />
+
+    <label>Comment</label>
+    <textarea formControlName="comment" class="form-control"></textarea>
+  </div> -->
+
   <div>
     <label>Upload Images:</label>
     <input type="file" name="image" (change)="onFileSelected($event)" required />
@@ -76,5 +139,5 @@
     </div>
   </div>
 
-  <button [disabled]="!UploadForm.valid" class="bg-red-500">Upload Product</button>
+  <button [disabled]="UploadForm.valid" class="bg-red-500">Upload Product</button>
 </form>

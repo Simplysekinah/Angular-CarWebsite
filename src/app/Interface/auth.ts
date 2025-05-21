@@ -24,12 +24,21 @@ export interface verifyPassword {
   newpassword: string;
   // confirmpassword: string;
 }
+export interface Review {
+  user: string;
+  rating: number;
+  comment: string;
+}
 export interface uploadProduct {
-  title: string;
+  name: string;
+  type: string;
+  fuelCapacity:string;
+  steering:string;
+  capacity:Number; 
   price: Number;
-  description: string;
-  category: string;
   availability: string;
-  color: string;
+  description: string;
+  reviews:Review;
+  category: string;
   image: string;
 }
