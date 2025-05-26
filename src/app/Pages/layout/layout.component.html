@@ -60,4 +60,22 @@
       <app-footer></app-footer>
     </div>
   </section>
+  <aside class="hidden bg-slate-50 items-center gap-6 justify-between shadow-lg px-5 sticky bottom-0 py-5 w-[100%] max-md:flex">
+      <div class="text-center" (click)="toggleIcon('home')" routerLink="/dashboard">
+        <ng-icon [name]="activeTab === 'home' ?'bootstrapHouseFill': 'bootstrapHouse'" size="25" />
+        <h4 [ngClass]="activeTab === 'home'? 'text-xs font-medium': 'text-xs font-light'">Home</h4>
+      </div>
+      <div class="text-center" (click)="toggleIcon('category')">
+        <ng-icon [name]="activeTab === 'category' ?'bootstrapCollectionFill': 'bootstrapCollection'" size="25" />
+        <h4 [ngClass]="activeTab === 'category'? 'text-xs font-medium': 'text-xs font-light'">Category</h4>
+      </div>
+      <div class="text-center" (click)="toggleIcon('favourite')">
+        <ng-icon [name]="activeTab === 'favourite' ?'bootstrapHeartFill': 'bootstrapHeart'" size="25" />
+        <h4 [ngClass]="activeTab === 'favourite'? 'text-xs font-medium': 'text-xs font-light'">Favourite</h4>
+      </div>
+      <div class="text-center" (click)="toggleIcon('setting')">
+        <ng-icon [name]="activeTab === 'setting' ?'bootstrapGearFill': 'bootstrapGear'" size="25" />
+        <h4 [ngClass]="activeTab === 'setting'? 'text-xs font-medium': 'text-xs font-light'">Settings</h4>
+      </div>
+    </aside>
 </main>
