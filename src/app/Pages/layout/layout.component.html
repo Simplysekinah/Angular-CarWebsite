@@ -1,47 +1,63 @@
 <main>
-    <nav class="flex justify-between p-5 shadow-lg items-center h-[15vh]">
+  <nav class="h-[13vh] shadow-lg bg-slate-100 z-10 sticky top-0 p-5 max-md:h-fit">
+    <nav class="flex justify-between items-center">
       <h2 class="text-2xl font-bold text-gray-700">Join RideEase</h2>
-        <div class="border flex items-center rounded-3xl py-2 px-3">
-          <ng-icon name="bootstrapSearch"/>
-          <input type="text" placeholder="Search" class="outline-none border-none" />
-          <ng-icon name="bootstrapSliders"/>
+      <div class="border flex items-center rounded-3xl py-2 px-3 w-[50%] justify-between max-lg:hidden">
+        <div class="flex items-center w-[100%]">
+          <div class="px-2">
+            <ng-icon size="20" name="bootstrapSearch" />
+          </div>
+          <input type="text" placeholder="Search" class="outline-none border-none w-[100%] bg-transparent" />
         </div>
-      <div class="flex items-center gap-3">
-        <div class="border rounded-full p-2 flex items-center justify-center">
+        <ng-icon size="20" name="bootstrapSliders"  />
+      </div>
+      <div class="flex items-center gap-3 ">
+        <div class="border rounded-full p-2 flex items-center justify-center max-md:hidden">
           <ng-icon name="bootstrapHeartFill" />
         </div>
-        <div class="border rounded-full p-2 flex items-center justify-center">
+        <div class="border rounded-full p-2 flex items-center justify-center max-md:hidden">
           <ng-icon name="bootstrapBellFill" />
         </div>
-        <div class="border rounded-full p-2 flex items-center justify-center">
+        <div class="border rounded-full p-2 flex items-center justify-center max-md:hidden">
           <ng-icon name="bootstrapGearFill" />
         </div>
         <div class="border rounded-full p-2 flex items-center justify-center">
-          <ng-icon name="bootstrapPersonFill"/>
+          <ng-icon name="bootstrapPersonFill" />
         </div>
       </div>
     </nav>
-    <section class="flex">
-      <aside class="flex flex-col items-center gap-6 shadow-lg px-3 py-5 h-[85vh] w-[6%]">
-        <div class="text-center" (click)="toggleIcon('home')" routerLink="/dashboard">
-          <ng-icon [name]="activeTab === 'home' ?'bootstrapHouseFill': 'bootstrapHouse'" size="25"/>
-          <h4 [ngClass]="activeTab === 'home'? 'text-xs font-medium': 'text-xs font-light'">Home</h4>
+    <div class="border hidden max-md:flex items-center rounded-3xl py-2 px-3 w-[100%] mt-2 justify-between max-lg:hidden">
+      <div class="flex items-center w-[100%]">
+        <div class="px-2">
+          <ng-icon size="20" name="bootstrapSearch" />
         </div>
-        <div class="text-center" (click)="toggleIcon('category')">
-          <ng-icon [name]="activeTab === 'category' ?'bootstrapCollectionFill': 'bootstrapCollection'" size="25"/>
-          <h4 [ngClass]="activeTab === 'category'? 'text-xs font-medium': 'text-xs font-light'">Category</h4>
-        </div>
-        <div class="text-center" (click)="toggleIcon('favourite')">
-          <ng-icon [name]="activeTab === 'favourite' ?'bootstrapHeartFill': 'bootstrapHeart'" size="25"/>
-          <h4 [ngClass]="activeTab === 'favourite'? 'text-xs font-medium': 'text-xs font-light'">Favourite</h4>
-        </div>
-        <div class="text-center" (click)="toggleIcon('setting')">
-          <ng-icon [name]="activeTab === 'setting' ?'bootstrapGearFill': 'bootstrapGear'" size="25"/>
-          <h4 [ngClass]="activeTab === 'setting'? 'text-xs font-medium': 'text-xs font-light'">Settings</h4>
-        </div>
-      </aside>
-      <div class="w-[94%]">
-        <router-outlet></router-outlet>
+        <input type="text" placeholder="Search" class="outline-none border-none w-[100%] bg-transparent" />
       </div>
-    </section>
+      <ng-icon size="20" name="bootstrapSliders" />
+    </div>
+  </nav>
+  <section class="flex h-[87vh] overflow-auto">
+    <aside class="flex flex-col items-center gap-6 shadow-lg px-3 py-5 w-[6%] max-lg:hidden">
+      <div class="text-center" (click)="toggleIcon('home')" routerLink="/dashboard">
+        <ng-icon [name]="activeTab === 'home' ?'bootstrapHouseFill': 'bootstrapHouse'" size="25" />
+        <h4 [ngClass]="activeTab === 'home'? 'text-xs font-medium': 'text-xs font-light'">Home</h4>
+      </div>
+      <div class="text-center" (click)="toggleIcon('category')">
+        <ng-icon [name]="activeTab === 'category' ?'bootstrapCollectionFill': 'bootstrapCollection'" size="25" />
+        <h4 [ngClass]="activeTab === 'category'? 'text-xs font-medium': 'text-xs font-light'">Category</h4>
+      </div>
+      <div class="text-center" (click)="toggleIcon('favourite')">
+        <ng-icon [name]="activeTab === 'favourite' ?'bootstrapHeartFill': 'bootstrapHeart'" size="25" />
+        <h4 [ngClass]="activeTab === 'favourite'? 'text-xs font-medium': 'text-xs font-light'">Favourite</h4>
+      </div>
+      <div class="text-center" (click)="toggleIcon('setting')">
+        <ng-icon [name]="activeTab === 'setting' ?'bootstrapGearFill': 'bootstrapGear'" size="25" />
+        <h4 [ngClass]="activeTab === 'setting'? 'text-xs font-medium': 'text-xs font-light'">Settings</h4>
+      </div>
+    </aside>
+    <div class="w-[94%] overflow-auto max-lg:w-[100%]">
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </div>
+  </section>
 </main>

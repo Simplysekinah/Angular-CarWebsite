@@ -6,10 +6,11 @@ import {bootstrapBellFill, bootstrapHeart, bootstrapHeartFill, bootstrapSearch, 
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FooterComponent } from "../../Shared/footer/footer.component";
 
 @Component({
   selector: 'app-layout',
-  imports: [NgIcon,RouterOutlet,CommonModule,FormsModule,RouterLink],
+  imports: [NgIcon, RouterOutlet, CommonModule, FormsModule, RouterLink, FooterComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
   viewProviders:[provideIcons({bootstrapSearch,bootstrapHeart,bootstrapSliders,bootstrapSuitHeart,bootstrapHeartFill,bootstrapGear,bootstrapBellFill,bootstrapPersonFill,bootstrapHouseFill,bootstrapGearFill,bootstrapCollection,bootstrapHouse,bootstrapCollectionFill})]

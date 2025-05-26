@@ -17,8 +17,10 @@ export class DashboardComponent {
   carImgs = 'car2.png'
   backImg = 'back1.png'
   backImgs = 'back2.png'
+  isfavourites = false
   //  carData: any[] = [];
   carData: uploadProduct | any;
+  carDatas: uploadProduct | any;
   _id: string = ''
   constructor(private service: ProductService) { }
   ngOnInit() {
@@ -26,6 +28,11 @@ export class DashboardComponent {
       console.log('Products:', response);
       this.carData = response.products;
       console.log(this.carData);
+    })
+    this.service.GetProductsbyCategorys().subscribe((response) => {
+      console.log('Products:', response);
+      this.carDatas = response.products;
+      console.log(this.carDatas);
     })
   }
   onClickRent() {
@@ -40,6 +47,10 @@ export class DashboardComponent {
       // this.carData = response.products;
       // console.log(this.carData);
     })
+  }
+  favourite(_id:string){
+    console.log(_id);
+    this.isfavourites =!this.isfavourites
   }
 
 }

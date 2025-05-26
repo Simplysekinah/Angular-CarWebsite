@@ -1,12 +1,12 @@
 <main class="p-4">
-    <header class="flex justify-evenly gap-5">
-        <app-hero-banner [imageUrl]="carImg" [backgroundImage]="backImg" (rentalClick)="onClickRent()">
+    <header class="flex justify-evenly gap-5 max-md:overflow-auto max-md:w-[100%]">
+        <app-hero-banner [imageUrl]="carImg" [backgroundImage]="backImg" class="max-md:w-[100%]" (rentalClick)="onClickRent()">
             <ng-container hero-title>
-                <h1 class="text-3xl font-bold md:text-2xl leading-snug">The Best Platform for Car Rental</h1>
+                <h1 class="text-3xl font-bold md:text-xl max-sm:text-2xl md:font-semibold leading-snug">The Best Platform for Car Rental</h1>
             </ng-container>
 
             <ng-container hero-description>
-                <p class="text-lg font-medium md:text-xl">Ease of doing a car rental safely and reliably. Of course at a
+                <p class="text-lg font-medium max-md:text-lg ">Ease of doing a car rental safely and reliably. Of course at a
                     low price.</p>
             </ng-container>
 
@@ -16,13 +16,13 @@
                 </button>
             </ng-container>
         </app-hero-banner>
-        <app-hero-banner [imageUrl]="carImgs" [backgroundImage]="backImgs" (rentalClick)="onClickRent()">
+        <app-hero-banner [imageUrl]="carImgs" [backgroundImage]="backImgs" class="max-md:hidden" (rentalClick)="onClickRent()">
             <ng-container hero-title>
-                <h1 class="text-3xl font-bold md:text-2xl leading-snug">Easy way to rent a car at low price</h1>
+                <h1 class="text-3xl font-bold md:text-xl md:font-semibold leading-snug">Easy way to rent a car at low price</h1>
             </ng-container>
 
             <ng-container hero-description>
-                <p class="text-lg font-medium md:text-xl">Providing cheap car rental services and safe and comfortable
+                <p class="text-lg font-medium max-md:text-xs">Providing cheap car rental services and safe and comfortable
                     facilities.</p>
             </ng-container>
 
@@ -33,11 +33,23 @@
             </ng-container>
         </app-hero-banner>
     </header>
-    <section>
-        <ng-container *ngFor="let car of carData">
-            <app-car-card [car]="car" (carSelected)="handleCarSelection($event)"></app-car-card>
-        </ng-container>
-
+    <section class="flex flex-col gap-4">
+        <div class="flex flex-col gap-3">
+            <h4>Popular car</h4>
+            <div class="flex gap-3 overflow-auto p-3 no-scroll">
+                <ng-container *ngFor="let car of carData" >
+                    <app-car-card [car]="car" (carSelected)="handleCarSelection($event)" (favourites)="favourite($event)"></app-car-card>
+                </ng-container>
+            </div>
+        </div>
+        <div>
+            <h4>Recommendation Car</h4>
+            <div class="flex gap-3 overflow-auto p-3 no-scroll">
+                <ng-container *ngFor="let car of carDatas">
+                    <app-car-card [car]="car" (carSelected)="handleCarSelection($event)" (favourites)="favourite($event)"></app-car-card>
+                </ng-container>
+            </div>
+        </div>
         <!-- <app-car-card *ngIf="carData" [car]="carData"></app-car-card> -->
     </section>
 </main>
