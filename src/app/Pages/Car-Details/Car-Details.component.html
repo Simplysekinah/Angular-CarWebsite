@@ -1,0 +1,33 @@
+<div>
+    <div *ngIf="carDetails"
+        class="flex flex-col items-center md:flex-row gap-6 p-6 bg-white rounded-lg transition-all duration-300">
+
+        <!-- Car Image -->
+        <div class="w-full md:w-1/2 relative overflow-hidden rounded-md bg-[#3563E9] h-[300px] flex items-center"
+            [ngStyle]="{'background-image': 'url(' + backImg + ')'}">
+            <div class="absolute inset-0  rounded-lg z-0"></div>
+            <img [src]="carDetails.image" alt="Car Image"
+                class="w-full h-auto rounded-md transform transition-transform duration-500 hover:scale-105">
+        </div>
+
+        <!-- Car Details -->
+        <div class="w-full md:w-1/2 flex flex-col justify-center">
+            <h1 class="text-3xl font-bold text-gray-900">{{carDetails.name}}</h1>
+            <p class="text-gray-600 mt-2 text-lg">{{carDetails.description}}</p>
+
+            <ul class="mt-4 space-y-2 text-lg text-gray-700 flex flex-wrap justify-around items-center gap-5">
+                <li><strong>Type:</strong> {{carDetails.type}}</li>
+                <li><strong>Capacity:</strong> {{carDetails.capacity}}</li>
+                <li><strong>Steering:</strong> {{carDetails.steering}}</li>
+                <li><strong>Fuel Capacity:</strong> {{carDetails.fuelCapacity}}</li>
+                <li><strong>Price:</strong> {{carDetails.price}}/day</li>
+            </ul>
+
+            <!-- CTA Button -->
+            <button (click)="payment()"
+                class="mt-6 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg rounded-md shadow-md transform transition-transform duration-300 hover:scale-105">
+                Rent Now
+            </button>
+        </div>
+    </div>
+</div>

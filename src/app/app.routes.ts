@@ -7,6 +7,8 @@ import { AuthComponent } from './Pages/Admin/auth/auth.component';
 import { UploadProductComponent } from './Pages/Admin/upload-product/upload-product.component';
 import { DashboardsComponent } from './Pages/Admin/dashboards/dashboards.component';
 import { adminGuardGuard } from './Guard/Admin/admin-guard.guard';
+import { CarDetailsComponent } from './Pages/Car-Details/Car-Details.component';
+import { PaymentComponent } from './Pages/payment/payment.component';
 
 export const routes: Routes = [
   // admin routes
@@ -41,6 +43,14 @@ export const routes: Routes = [
       {
         path:'dashboard',
         component:DashboardComponent
+      },
+      {
+        path:'carDetails/:_id',
+        component:CarDetailsComponent
+      },
+      {
+        path:'paymentpage/:_id',
+        component:PaymentComponent
       }
     ]
   }

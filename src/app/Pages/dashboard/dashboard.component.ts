@@ -5,6 +5,7 @@ import { ProductService } from '../../Service/ProductService/product.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { uploadProduct } from '../../Interface/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,7 @@ export class DashboardComponent {
   carData: uploadProduct | any;
   carDatas: uploadProduct | any;
   _id: string = ''
-  constructor(private service: ProductService) { }
+  constructor(private service: ProductService, private router:Router) { }
   ngOnInit() {
     this.service.GetProductsbyCategory().subscribe((response) => {
       console.log('Products:', response);
@@ -42,11 +43,10 @@ export class DashboardComponent {
     console.log("Selected Car ID:", _id);
     this._id = _id
     console.log(_id);
-    this.service.GetProductsbyId(_id).subscribe((response) => {
-      console.log('Products:', response);
-      // this.carData = response.products;
-      // console.log(this.carData);
-    })
+    this.router.navigate([`/carDetails/${this._id}`])
+    // this.service.GetProductsbyId(_id).subscribe((response) => {
+    //   console.log('Products:', response);
+    // })
   }
   favourite(_id:string){
     console.log(_id);

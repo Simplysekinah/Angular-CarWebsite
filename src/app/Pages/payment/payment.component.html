@@ -1,0 +1,197 @@
+<form action="" [formGroup]="rentalForm">
+    <section class="bg-[#90A3BF] flex gap-3 p-3 max-md:flex-col-reverse">
+        <div class="w-[65%] flex flex-col gap-3 max-md:w-full">
+
+            <div class="shadow-lg bg-slate-50 rounded-md p-6">
+                <div>Billing info</div>
+                <div class="flex justify-between">
+                    <p>Please enter your billing info</p>
+                    <p>step 1 of 4</p>
+                </div>
+                <div class="flex flex-wrap justify-between">
+                    <div class="flex flex-col w-[49%]">
+                        <label for="">Name</label>
+                        <input type="text" id="name" placeholder="Your name" formControlName="names"
+                            class="bg-[#90A3BF] rounded-md border-none outline-none focus:ring-2 focus:ring-blue-500 p-2">
+                        <!-- <input type="text" placeholder="Your name" class="bg-[#90A3BF] rounded-md border-none outline-none"> -->
+                    </div>
+                    <div class="flex flex-col w-[49%]">
+                        <label for="">Phone Number</label>
+                        <input type="text" id="name" placeholder="Phone number" formControlName="phoneN"
+                            class="bg-[#90A3BF] rounded-md border-none outline-none focus:ring-2 focus:ring-blue-500 p-2">
+                    </div>
+                    <div class="flex flex-col w-[49%]">
+                        <label for="">Address</label>
+                        <input type="text" id="name" placeholder="Address" formControlName="address"
+                            class="bg-[#90A3BF] rounded-md border-none outline-none focus:ring-2 focus:ring-blue-500 p-2">
+                    </div>
+                    <div class="flex flex-col w-[49%]">
+                        <label for="">Town/City</label>
+                        <input type="text" id="name" placeholder="Town or City" formControlName="town"
+                            class="bg-[#90A3BF] rounded-md border-none outline-none focus:ring-2 focus:ring-blue-500 p-2">
+                    </div>
+                </div>
+            </div>
+            <div class=" p-6 bg-white shadow-md rounded-md">
+                <h2 class="text-xl font-semibold mb-2">Rental Info</h2>
+                <div class="flex justify-between">
+                    <p class="text-sm text-gray-600 mb-4">Please select your rental date</p>
+                    <p>step 2 of 4</p>
+                </div>
+
+                <form [formGroup]="rentalForm" class="space-y-4">
+                    <!-- Pick-Up Section -->
+                    <div class="flex items-center space-x-2">
+                        <input type="radio" formControlName="rentalType" value="pick-up" id="pick-up"
+                            class="accent-blue-500">
+                        <label for="pick-up" class="text-gray-700 font-medium">Pick-Up</label>
+                    </div>
+                    <div *ngIf="rentalForm.get('rentalType')?.value === 'pick-up'"
+                        class="p-4 bg-gray-100 rounded-md flex flex-wrap justify-between">
+                        <div class="w-[49%]">
+                            <label for="pickUpLocation" class="block text-sm font-medium text-gray-600">Location</label>
+                            <input id="pickUpLocation" formControlName="pickUpLocation" placeholder="Select your city"
+                                class="w-full border-none rounded-md p-2 focus:ring focus:ring-blue-300">
+                        </div>
+                        <div class="w-[49%]">
+                            <label for="pickUpDate" class="block text-sm font-medium text-gray-600">Date</label>
+                            <input id="pickUpDate" type="date" formControlName="pickUpDate"
+                                class="w-full border-none rounded-md p-2 focus:ring focus:ring-blue-300">
+                        </div>
+                        <div class="w-[49%]">
+                            <label for="pickUpTime" class="block text-sm font-medium text-gray-600">Time</label>
+                            <input id="pickUpTime" type="time" formControlName="pickUpTime"
+                                class="w-full border-none rounded-md p-2 focus:ring focus:ring-blue-300">
+                        </div>
+                    </div>
+
+                    <!-- Drop-Off Section -->
+                    <div class="flex items-center space-x-2">
+                        <input type="radio" formControlName="rentalType" value="drop-off" id="drop-off"
+                            class="accent-blue-500">
+                        <label for="drop-off" class="text-gray-700 font-medium">Drop-Off</label>
+                    </div>
+                    <div *ngIf="rentalForm.get('rentalType')?.value === 'drop-off'"
+                        class="p-4 bg-gray-100 rounded-md flex flex-wrap justify-between">
+                        <div class="w-[49%]">
+                            <label for="dropOffLocation"
+                                class="block text-sm font-medium text-gray-600">Location</label>
+                            <input id="dropOffLocation" formControlName="dropOffLocation" placeholder="Select your city"
+                                class="w-full border-none rounded-md p-2 focus:ring focus:ring-blue-300">
+                        </div>
+                        <div class="w-[49%]">
+                            <label for="dropOffDate" class="block text-sm font-medium text-gray-600">Date</label>
+                            <input id="dropOffDate" type="date" formControlName="dropOffDate"
+                                class="w-full border-none rounded-md p-2 focus:ring focus:ring-blue-300">
+                        </div>
+                        <div class="w-[49%]">
+                            <label for="dropOffTime" class="block text-sm font-medium text-gray-600">Time</label>
+                            <input id="dropOffTime" type="time" formControlName="dropOffTime"
+                                class="w-full rounded-md p-2 focus:ring focus:ring-blue-300 border-none">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="shadow-lg bg-slate-50 rounded-md p-6 gap-2 flex flex-col">
+                <div>Billing info</div>
+                <div class="flex justify-between">
+                    <p>Please enter your billing info</p>
+                    <p>step 3 of 4</p>
+                </div>
+                <div class="flex flex-col gap-2 shadow-lg rounded-md bg-[#90A3BF] p-3">
+                    <div class="flex justify-between">
+                        <div class="flex">
+                            <input type="radio" name="" id="">
+                            <p>Credit Card</p>
+                        </div>
+                        <div>
+                            <p>VISA</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap justify-between">
+                        <div class="flex flex-col w-[49%]">
+                            <label for="">Name</label>
+                            <input type="text" placeholder="Your name"
+                                class="bg-[#FFFFFF] rounded-md border-none outline-none">
+                        </div>
+                        <div class="flex flex-col w-[49%]">
+                            <label for="">Phone Number</label>
+                            <input type="text" placeholder="Phone number"
+                                class="bg-[#FFFFFF] rounded-md border-none outline-none">
+                        </div>
+                        <div class="flex flex-col w-[49%]">
+                            <label for="">Address</label>
+                            <input type="text" placeholder="Address"
+                                class="bg-[#FFFFFF] rounded-md border-none outline-none">
+                        </div>
+                        <div class="flex flex-col w-[49%]">
+                            <label for="">Town/City</label>
+                            <input type="text" placeholder="Town or City"
+                                class="bg-[#FFFFFF] rounded-md border-none outline-none">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <div class="flex justify-between shadow-lg rounded-md bg-[#90A3BF] p-3">
+                        <div class="flex items-center">
+                            <input type="radio" name="" id="">
+                            <p>Credit Card</p>
+                        </div>
+                        <div>
+                            <p>VISA</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between shadow-lg rounded-md bg-[#90A3BF] p-3">
+                        <div class="flex items-center">
+                            <input type="radio" name="" id="">
+                            <p>Credit Card</p>
+                        </div>
+                        <div>
+                            <p>VISA</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shadow-lg bg-slate-50 rounded-md p-6 gap-2 flex flex-col">
+                <h2>Confirmation</h2>
+                <div class="flex justify-between">
+                    <p>we are getting to the end, just a few clicks and your rental is ready!</p>
+                    <p>step 4 of 4</p>
+                </div>
+                <div class="flex gap-3 shadow-lg rounded-md bg-[#90A3BF] p-3">
+                    <input type="checkbox" name="" id="">
+                    <p>I agree with our terms and conditions and privacy policy.</p>
+                </div>
+                <button>Rent Now</button>
+            </div>
+        </div>
+        <div class="w-[35%] shadow-lg bg-slate-50 rounded-md p-4 h-fit max-md:w-full" *ngIf="carDetails">
+            <h2>Rental Summary</h2>
+            <p>Price may change depending on the length of the rental and the price of your rental car</p>
+            <div class="flex">
+                <div class="w-full  relative overflow-hidden rounded-md bg-[#3563E9] h-[120px] flex items-center"
+                    [ngStyle]="{'background-image': 'url(' + backImg + ')'}">
+                    <div class="absolute inset-0  rounded-lg z-0"></div>
+                    <img [src]="carDetails.image" alt="Car Image"
+                        class="w-full h-auto rounded-md transform transition-transform duration-500 hover:scale-105">
+                </div>
+                <h2>{{carDetails.name}}</h2>
+            </div>
+            <div>
+                <div class="flex justify-between">
+                    <p>Subtotal</p>
+                    <p>{{carDetails.price}}</p>
+                </div>
+                <div class="flex justify-between">
+                    <p>Tax</p>
+                    <p>0</p>
+                </div>
+            </div>
+            <div class="flex justify-between">
+                <p>Total-Price</p>
+                <p>{{carDetails.price}}</p>
+            </div>
+        </div>
+    </section>
+</form>
