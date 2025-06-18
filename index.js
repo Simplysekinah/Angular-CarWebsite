@@ -3,6 +3,7 @@ const express =require('express');
 require('dotenv').config()
 const userRouter = require('./Route/User/car-easeRouter')
 const adminRouter = require('./Route/Admin/car-easeProduct')
+const orderRouter = require('./Route/car-easeOrder')
 
 const app = express();
 const port = process.env.PORT
@@ -11,7 +12,7 @@ const cors =require('cors');
 app.use(express.json({extended:true, limit:"100mb"}))
 app.use(express.urlencoded({extended:true, limit:"100mb"}))
 app.use((cors({origin: "*"})))
-app.use("/car-ease",userRouter)
+app.use("/car-ease",userRouter,orderRouter)
 app.use("/adminauth",adminRouter)
 
 const uri = process.env.MONGO_URI
