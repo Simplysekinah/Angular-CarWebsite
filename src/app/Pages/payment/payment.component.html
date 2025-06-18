@@ -13,22 +13,45 @@
                         <label for="">Name</label>
                         <input type="text" id="name" placeholder="Your name" formControlName="names"
                             class="bg-[#90A3BF] rounded-md border-none outline-none focus:ring-2 focus:ring-blue-500 p-2">
-                        <!-- <input type="text" placeholder="Your name" class="bg-[#90A3BF] rounded-md border-none outline-none"> -->
+                        <div class="text-red-600">
+                            @if (rentalForm.controls['names'].errors?.['required'] &&
+                            rentalForm.controls['names'].touched) {
+                            <span>This is required</span>
+                            }
+                        </div>
                     </div>
                     <div class="flex flex-col w-[49%]">
                         <label for="">Phone Number</label>
                         <input type="text" id="name" placeholder="Phone number" formControlName="phoneN"
                             class="bg-[#90A3BF] rounded-md border-none outline-none focus:ring-2 focus:ring-blue-500 p-2">
+                        <div class="text-red-600">
+                            @if (rentalForm.controls['phoneN'].errors?.['required'] &&
+                            rentalForm.controls['phoneN'].touched) {
+                            <span>This is required</span>
+                            }
+                        </div>
                     </div>
                     <div class="flex flex-col w-[49%]">
                         <label for="">Address</label>
                         <input type="text" id="name" placeholder="Address" formControlName="address"
                             class="bg-[#90A3BF] rounded-md border-none outline-none focus:ring-2 focus:ring-blue-500 p-2">
+                        <div class="text-red-600">
+                            @if (rentalForm.controls['address'].errors?.['required'] &&
+                            rentalForm.controls['address'].touched) {
+                            <span>This is required</span>
+                            }
+                        </div>
                     </div>
                     <div class="flex flex-col w-[49%]">
                         <label for="">Town/City</label>
                         <input type="text" id="name" placeholder="Town or City" formControlName="town"
                             class="bg-[#90A3BF] rounded-md border-none outline-none focus:ring-2 focus:ring-blue-500 p-2">
+                        <div class="text-red-600">
+                            @if (rentalForm.controls['town'].errors?.['required'] &&
+                            rentalForm.controls['town'].touched) {
+                            <span>This is required</span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,7 +78,8 @@
                         </div>
                         <div class="w-[49%]">
                             <label for="pickUpDate" class="block text-sm font-medium text-gray-600">Date</label>
-                            <input id="pickUpDate" type="date" formControlName="pickUpDate"
+                            <input id="pickUpDate" type="date" formControlName="pickUpDate" [min]="minDate"
+                                (change)="calculateRentalDays()"
                                 class="w-full border-none rounded-md p-2 focus:ring focus:ring-blue-300">
                         </div>
                         <div class="w-[49%]">
@@ -82,6 +106,7 @@
                         <div class="w-[49%]">
                             <label for="dropOffDate" class="block text-sm font-medium text-gray-600">Date</label>
                             <input id="dropOffDate" type="date" formControlName="dropOffDate"
+                                [min]="rentalForm.value.pickUpDate" (change)="calculateRentalDays()"
                                 class="w-full border-none rounded-md p-2 focus:ring focus:ring-blue-300">
                         </div>
                         <div class="w-[49%]">
@@ -90,7 +115,9 @@
                                 class="w-full rounded-md p-2 focus:ring focus:ring-blue-300 border-none">
                         </div>
                     </div>
-
+                    <p *ngIf="rentalDays > 0">Total Rental Days: {{ rentalDays }}</p>
+                    <p *ngIf="rentalDays === 0 && rentalForm.value.dropOffDate">Drop-off date must be after pick-up
+                        date!</p>
                 </form>
             </div>
             <div class="shadow-lg bg-slate-50 rounded-md p-6 gap-2 flex flex-col">
@@ -109,6 +136,11 @@
                             <p>VISA</p>
                         </div>
                     </div>
+                    <select formControlName="paymentMethod">
+                        <option value="credit-card">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="bitcoin">Bitcoin</option>
+                    </select>
                     <div class="flex flex-wrap justify-between">
                         <div class="flex flex-col w-[49%]">
                             <label for="">Name</label>
@@ -132,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col gap-3">
+                <!-- <div class="flex flex-col gap-3">
                     <div class="flex justify-between shadow-lg rounded-md bg-[#90A3BF] p-3">
                         <div class="flex items-center">
                             <input type="radio" name="" id="">
@@ -151,7 +183,7 @@
                             <p>VISA</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="shadow-lg bg-slate-50 rounded-md p-6 gap-2 flex flex-col">
                 <h2>Confirmation</h2>
@@ -160,10 +192,16 @@
                     <p>step 4 of 4</p>
                 </div>
                 <div class="flex gap-3 shadow-lg rounded-md bg-[#90A3BF] p-3">
-                    <input type="checkbox" name="" id="">
+                    <input type="checkbox" name="" id="" formControlName="terms">
                     <p>I agree with our terms and conditions and privacy policy.</p>
+                    <div class="text-red-600">
+                        @if (rentalForm.controls['terms'].errors?.['required'] &&
+                        rentalForm.controls['terms'].touched) {
+                        <span>You must agree before submitting</span>
+                        }
+                    </div>
                 </div>
-                <button>Rent Now</button>
+                <button [disabled]="rentalForm.valid" (click)="SubmitPayment()">Rent Now</button>
             </div>
         </div>
         <div class="w-[35%] shadow-lg bg-slate-50 rounded-md p-4 h-fit max-md:w-full" *ngIf="carDetails">

@@ -8,7 +8,8 @@ export const api = {
   homepage: `${main}/homepage`,
   forgetpassword: `${main}/forget`,
   resetpassword: `${main}/verify`,
-  verifypassword: `${main}/reset`
+  verifypassword: `${main}/reset`,
+  rentaldetails:`${main}/carRental`
 }
 export const adminapi={
   register: `${admin}/register`,
@@ -20,5 +21,5 @@ export const adminapi={
   getbycategorys: `${admin}/getProduct/${categoryR}`,
   getbyid: `${admin}/getProductbyid/`,
   updateproduct:`${admin}/updateProduct/:id`,
-  deleteproduct:`${admin}/deleteProduct/:id`
+  deleteproduct:`${admin}/deleteProduct/:id`,
 }

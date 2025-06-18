@@ -99,6 +99,8 @@ export class LoginComponent implements OnInit {
     }
     this.service.Signin(this.LoginForm.value).subscribe((response)=>{
       console.log(response)
+      console.log(response.user._id)
+      localStorage.setItem('_id',response.user._id)
       this.success = 'Signin successful';
       this.router.navigate(['/dashboard'])
     },

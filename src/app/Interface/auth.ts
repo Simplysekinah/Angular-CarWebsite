@@ -32,13 +32,33 @@ export interface Review {
 export interface uploadProduct {
   name: string;
   type: string;
-  fuelCapacity:string;
-  steering:string;
-  capacity:Number; 
+  fuelCapacity: string;
+  steering: string;
+  capacity: Number;
   price: Number;
   availability: string;
   description: string;
-  reviews:Review;
+  reviews: Review;
   category: string;
   image: string;
+}
+
+export interface rentCar {
+  _id:String,
+  names: String,
+  phoneN: String,
+  address: String,
+  town: String,
+  pickUpLocation: String,
+  pickUpDate: Date,
+  pickUpTime: String,
+  paymentMethod: String,
+  // cardNumber: String,
+  // expirationDate: String,
+  // cvc: String,
+  dropOffLocation: String,
+  dropOffDate: Date,
+  dropOffTime: String,
+  terms: boolean,
+  amount:String
 }
