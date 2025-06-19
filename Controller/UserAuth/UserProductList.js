@@ -21,6 +21,7 @@ const rentCar = async (request, response) => {
             dropOffDate,
             dropOffTime,
             terms,
+            amount
         } = request.body
         console.log(_id);
         if (!_id) {
@@ -33,12 +34,29 @@ const rentCar = async (request, response) => {
         if (!user) return response.status(404).json({ message: 'User not found' });
 
         const rental = request.body;
-        console.log(rental);
-        // await rental.save();
-        // res.status(201).send({ message: 'Rental confirmed!', rental });
+        // console.log(rental);
+        const rentalDetails = await RentalModel.create(rental);
+        res.status(201).send({ message: 'Rental confirmed!', rentalDetails });
     } catch (error) {
         response.status(500).send({ message: 'Error processing rental', error });
     }
 }
+// PATCH /rentals/:id/confirm-payment
+const confirmPayment = async (request, response) => {
+  try {
+    console.log(request.body);
+    const {rentalId} = request.body;
 
-module.exports = { rentCar }
+    const updated = await RentalModel.findByIdAndUpdate(
+      rentalId,
+      { paid: true },
+      { new: true }
+    );
+
+    response.json({ message: 'Payment confirmed and rental updated.', rental: updated });
+  } catch (error) {
+    response.status(500).json({ message: 'Error confirming payment', error });
+  }
+};
+
+module.exports = { rentCar,confirmPayment }
