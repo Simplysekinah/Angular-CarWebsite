@@ -44,7 +44,7 @@ export interface uploadProduct {
 }
 
 export interface rentCar {
-  _id:String,
+  userId:String,
   names: String,
   phoneN: String,
   address: String,
