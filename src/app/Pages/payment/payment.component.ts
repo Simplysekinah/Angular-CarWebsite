@@ -116,7 +116,8 @@ export class PaymentComponent {
     console.log(this._id);
     const _id = localStorage.getItem('_id')
     // Ensure no empty values
-    const formData = { ...this.rentalForm.value, _id: _id };
+    let amount = this.carDetails.price * this.rentalDays
+    const formData = { ...this.rentalForm.value, _id: _id,amount:amount };
     console.log(formData);
     if (
       !formData.names ||
