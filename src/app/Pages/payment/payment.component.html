@@ -222,13 +222,13 @@
                     <p>{{carDetails.price}}</p>
                 </div>
                 <div class="flex justify-between">
-                    <p>Tax</p>
-                    <p>0</p>
+                    <p>Days</p>
+                    <p *ngIf="rentalDays > 0">Total Rental Days: {{ rentalDays }}</p>
                 </div>
             </div>
             <div class="flex justify-between">
                 <p>Total-Price</p>
-                <p>{{carDetails.price}}</p>
+                <p>{{carDetails.price * rentalDays}}</p>
             </div>
         </div>
     </section>
