@@ -60,5 +60,6 @@ export interface rentCar {
   dropOffDate: Date,
   dropOffTime: String,
   terms: boolean,
-  amount:String
+  amount:String,
+  paid:boolean
 }
