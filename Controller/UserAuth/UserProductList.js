@@ -8,7 +8,7 @@ const UserModel = require('../../Model/User/userModel')
 const rentCar = async (request, response) => {
     try {
         console.log(request.body);
-        const { _id, rentalType,
+        const { userId, rentalType,
              names,
             phoneN,
             address,
@@ -23,13 +23,13 @@ const rentCar = async (request, response) => {
             terms,
             amount
         } = request.body
-        console.log(_id);
-        if (!_id) {
+        console.log(userId);
+        if (!userId) {
             return response.status(400).json({ message: 'User ID is required!' });
         }
         console.log(request.body);
 
-        const user = await UserModel.findById(_id);
+        const user = await UserModel.findById(userId);
         console.log(user);
         if (!user) return response.status(404).json({ message: 'User not found' });
 
