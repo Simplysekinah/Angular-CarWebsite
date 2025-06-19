@@ -178,11 +178,11 @@ export class PaymentComponent {
     this.rentService.RentCar(formData).subscribe({
       next: (response) => {
         console.log('Payment Response:', response);
-        // localStorage.setItem('rentalId', response.rental._id); 
-        // localStorage.setItem('rentalAmount', response.rental.amount); 
-        // this.renderPayPalButton(response.rental.amount);
-        // this.showPayPalModal = true;
-        // setTimeout(() => this.renderPayPalButton(response.rental.amount), 0);
+        localStorage.setItem('rentalId', response.rentalDetails._id); 
+        localStorage.setItem('rentalAmount', response.rentalDetails.amount); 
+        this.renderPayPalButton(response.rentalDetails.amount);
+        this.showPayPalModal = true;
+        setTimeout(() => this.renderPayPalButton(response.rentalDetails.amount), 0);
       },
       error: (err) => {
         console.error('Payment Error:', err);
