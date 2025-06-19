@@ -180,6 +180,7 @@ export class PaymentComponent {
         console.log('Payment Response:', response);
         localStorage.setItem('rentalId', response.rentalDetails._id); 
         localStorage.setItem('rentalAmount', response.rentalDetails.amount); 
+        this.rentalForm.value == ""
         this.renderPayPalButton(response.rentalDetails.amount);
         this.showPayPalModal = true;
         setTimeout(() => this.renderPayPalButton(response.rentalDetails.amount), 0);
