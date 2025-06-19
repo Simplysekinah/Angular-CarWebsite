@@ -10,7 +10,7 @@ const rentalSchema = new mongoose.Schema(
     pickUpLocation: { type: String, required: true, trim: true },
     pickUpDate: { type: Date, required: true },
     pickUpTime: { type: String, required: true },
-    paymentMethod: { type: String, required: true, enum: ["Credit Card", "PayPal", "Bank Transfer"] },
+    paymentMethod: { type: String, required: true, enum: ["Credit Card", "paypal", "Bank Transfer"] },
     dropOffLocation: { type: String, required: true, trim: true },
     dropOffDate: { type: Date, required: true },
     amount:{type:String,required:true},
