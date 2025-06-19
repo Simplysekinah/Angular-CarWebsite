@@ -89,6 +89,7 @@ export class PaymentComponent {
 
   // **Fix 3:** Correct Rental Days Calculation
   this.rentalDays = Math.ceil((dropOffDate.getTime() - pickUpDate.getTime()) / (1000 * 3600 * 24));
+  console.log(this.rentalDays);
 }
 
   // calculateRentalDays() {
