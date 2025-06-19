@@ -29,6 +29,10 @@
                             rentalForm.controls['phoneN'].touched) {
                             <span>This is required</span>
                             }
+                            @if (rentalForm.controls['phoneN'].errors?.['pattern'] &&
+                            rentalForm.controls['phoneN'].touched) {
+                            <span>Only numbers are allowed</span>
+                            }
                         </div>
                     </div>
                     <div class="flex flex-col w-[49%]">
@@ -137,9 +141,9 @@
                         </div>
                     </div>
                     <select formControlName="paymentMethod">
-                        <option value="credit-card">Credit Card</option>
+                        <option value="paypal">Credit Card</option>
                         <option value="paypal">PayPal</option>
-                        <option value="bitcoin">Bitcoin</option>
+                        <option value="paypal">Bitcoin</option>
                     </select>
                     <div class="flex flex-wrap justify-between">
                         <div class="flex flex-col w-[49%]">
