@@ -183,7 +183,7 @@ export class PaymentComponent {
         this.rentalForm.value == ""
         this.renderPayPalButton(response.rentalDetails.amount);
         this.showPayPalModal = true;
-        setTimeout(() => this.renderPayPalButton(response.rentalDetails.amount), 1000);
+        setTimeout(() => {this.renderPayPalButton(response.rentalDetails.amount)}, 1000);
       },
       error: (err) => {
         console.error('Payment Error:', err);
