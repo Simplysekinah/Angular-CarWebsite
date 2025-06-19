@@ -38,7 +38,7 @@ const rentCar = async (request, response) => {
         const rentalDetails = await RentalModel.create(rental);
         res.status(201).send({ message: 'Rental confirmed!', rentalDetails });
     } catch (error) {
-        response.status(500).send({ message: 'Error processing rental', error });
+        response.status(500).send({ message: 'Error processing rental', error:error.message });
     }
 }
 // PATCH /rentals/:id/confirm-payment
