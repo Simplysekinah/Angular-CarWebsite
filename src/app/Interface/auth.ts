@@ -63,3 +63,8 @@ export interface rentCar {
   amount:String,
   paid:boolean
 }
+export interface confirmDetails{
+  paid:boolean,
+  transactionId:String,
+  payerEmail:String
+}

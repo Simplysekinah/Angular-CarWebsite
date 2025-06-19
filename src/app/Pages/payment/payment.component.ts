@@ -55,42 +55,42 @@ export class PaymentComponent {
   }
   rentalDays: number = 0;
 
- calculateRentalDays() {
-  if (!this.rentalForm.value.pickUpDate || !this.rentalForm.value.dropOffDate) {
-    return; // Ensure values exist before processing
+  calculateRentalDays() {
+    if (!this.rentalForm.value.pickUpDate || !this.rentalForm.value.dropOffDate) {
+      return; // Ensure values exist before processing
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to prevent errors
+
+    const pickUpDate = new Date(this.rentalForm.value.pickUpDate);
+    pickUpDate.setHours(0, 0, 0, 0); // Ensure only the date is compared
+
+    const dropOffDate = new Date(this.rentalForm.value.dropOffDate);
+    dropOffDate.setHours(0, 0, 0, 0);
+
+    console.log('Today:', today);
+    console.log('Pick-Up Date:', pickUpDate);
+
+    // **Fix 1:** Check if Pick-Up Date is Before Today
+    if (pickUpDate.getTime() < today.getTime()) {
+      this.toastr.error('Pick-up date cannot be in the past!');
+      alert('Pick-up date cannot be in the past!');
+      this.rentalForm.controls['pickUpDate'].setValue(''); // Reset invalid date
+      return;
+    }
+
+    // **Fix 2:** Ensure Drop-Off is After Pick-Up
+    if (dropOffDate.getTime() < pickUpDate.getTime()) {
+      this.toastr.error('Drop-off date must be after pick-up date!');
+      this.rentalDays = 0;
+      return;
+    }
+
+    // **Fix 3:** Correct Rental Days Calculation
+    this.rentalDays = Math.ceil((dropOffDate.getTime() - pickUpDate.getTime()) / (1000 * 3600 * 24));
+    console.log(this.rentalDays);
   }
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Reset time to prevent errors
-
-  const pickUpDate = new Date(this.rentalForm.value.pickUpDate);
-  pickUpDate.setHours(0, 0, 0, 0); // Ensure only the date is compared
-
-  const dropOffDate = new Date(this.rentalForm.value.dropOffDate);
-  dropOffDate.setHours(0, 0, 0, 0);
-
-  console.log('Today:', today);
-  console.log('Pick-Up Date:', pickUpDate);
-
-  // **Fix 1:** Check if Pick-Up Date is Before Today
-  if (pickUpDate.getTime() < today.getTime()) {
-    this.toastr.error('Pick-up date cannot be in the past!');
-    alert('Pick-up date cannot be in the past!');
-    this.rentalForm.controls['pickUpDate'].setValue(''); // Reset invalid date
-    return;
-  }
-
-  // **Fix 2:** Ensure Drop-Off is After Pick-Up
-  if (dropOffDate.getTime() < pickUpDate.getTime()) {
-    this.toastr.error('Drop-off date must be after pick-up date!');
-    this.rentalDays = 0;
-    return;
-  }
-
-  // **Fix 3:** Correct Rental Days Calculation
-  this.rentalDays = Math.ceil((dropOffDate.getTime() - pickUpDate.getTime()) / (1000 * 3600 * 24));
-  console.log(this.rentalDays);
-}
 
   // calculateRentalDays() {
   //   const pickUpDate = new Date(this.rentalForm.value.pickUpDate);
@@ -104,6 +104,34 @@ export class PaymentComponent {
   //   }
 
   // }
+  showPayPalModal = false;
+
+
+  renderPayPalButton(amount: number) {
+    const rentalAmount = localStorage.getItem('rentalAmount');
+    (window as any).paypal.Buttons({
+      createOrder: (data: any, actions: any) => {
+        return actions.order.create({
+          purchase_units: [{ amount: { value: rentalAmount } }],
+        });
+      },
+      onApprove: (data: any, actions: any) => {
+        return actions.order.capture().then((details: any) => {
+          const rentalId = localStorage.getItem('rentalId');
+           let confirmDetails = {
+            rentalId :rentalId,
+            paid: true,
+            transactionId: details.id,
+            payerEmail: details.payer.email_address,
+          }
+          this.rentService.ConfirmPayment(confirmDetails).subscribe(() => {
+            this.toastr.success('Payment confirmed!');
+            this.closeModal();
+          });
+        });
+      },
+    }).render('#paypal-button-container');
+  }
 
   SubmitPayment() {
     console.log('Processing Payment...');
@@ -117,7 +145,7 @@ export class PaymentComponent {
     const _id = localStorage.getItem('_id')
     // Ensure no empty values
     let amount = this.carDetails.price * this.rentalDays
-    const formData = { ...this.rentalForm.value, _id: _id,amount:amount,paid:false };
+    const formData = { ...this.rentalForm.value, _id: _id, amount: amount, paid: false };
     console.log(formData);
     if (
       !formData.names ||
@@ -142,20 +170,27 @@ export class PaymentComponent {
     console.log('Form Submitted:', formData);
 
     // Redirect to payment gateway after successful rental submission
-    if (formData.paymentMethod === 'PayPal') {
-      window.location.href = 'http://localhost:5000/pay'; // Replace with actual PayPal route
-    }
+    // if (formData.paymentMethod === 'PayPal') {
+    //   window.location.href = 'http://localhost:5000/pay'; // Replace with actual PayPal route
+    // }
 
     // Send rental details to backend
     this.rentService.RentCar(formData).subscribe({
       next: (response) => {
         console.log('Payment Response:', response);
-
+        // localStorage.setItem('rentalId', response.rental._id); 
+        // localStorage.setItem('rentalAmount', response.rental.amount); 
+        // this.renderPayPalButton(response.rental.amount);
+        // this.showPayPalModal = true;
+        // setTimeout(() => this.renderPayPalButton(response.rental.amount), 0);
       },
       error: (err) => {
         console.error('Payment Error:', err);
         this.toastr.error('Payment Failed!');
       },
     });
+  }
+  closeModal() {
+    this.showPayPalModal = false;
   }
 }

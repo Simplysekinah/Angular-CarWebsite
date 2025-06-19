@@ -9,7 +9,8 @@ export const api = {
   forgetpassword: `${main}/forget`,
   resetpassword: `${main}/verify`,
   verifypassword: `${main}/reset`,
-  rentaldetails:`${main}/carRental`
+  rentaldetails:`${main}/carRental`,
+  confirmdetails:`${main}/carRentals`
 }
 export const adminapi={
   register: `${admin}/register`,
