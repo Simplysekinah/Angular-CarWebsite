@@ -29,7 +29,7 @@ const rentCar = async (request, response) => {
         }
         console.log(request.body);
 
-        const user = await UserModel.findById(userId);
+        const user = await UserModel.findById({_id:userId});
         console.log(user);
         if (!user) return response.status(404).json({ message: 'User not found' });
 
