@@ -107,32 +107,6 @@ export class PaymentComponent {
   showPayPalModal = false;
 
 
-  renderPayPalButton(amount: number) {
-    const rentalAmount = localStorage.getItem('rentalAmount');
-    (window as any).paypal.Buttons({
-      createOrder: (data: any, actions: any) => {
-        return actions.order.create({
-          purchase_units: [{ amount: { value: rentalAmount } }],
-        });
-      },
-      onApprove: (data: any, actions: any) => {
-        return actions.order.capture().then((details: any) => {
-          const rentalId = localStorage.getItem('rentalId');
-           let confirmDetails = {
-            rentalId :rentalId,
-            paid: true,
-            transactionId: details.id,
-            payerEmail: details.payer.email_address,
-          }
-          this.rentService.ConfirmPayment(confirmDetails).subscribe(() => {
-            this.toastr.success('Payment confirmed!');
-            this.closeModal();
-          });
-        });
-      },
-    }).render('#paypal-button-container');
-  }
-
   SubmitPayment() {
     console.log('Processing Payment...');
 
@@ -191,6 +165,34 @@ export class PaymentComponent {
       },
     });
   }
+
+  renderPayPalButton(amount: number) {
+    const rentalAmount = localStorage.getItem('rentalAmount');
+    (window as any).paypal.Buttons({
+      createOrder: (data: any, actions: any) => {
+        return actions.order.create({
+          purchase_units: [{ amount: { value: rentalAmount } }],
+        });
+      },
+      onApprove: (data: any, actions: any) => {
+        return actions.order.capture().then((details: any) => {
+          const rentalId = localStorage.getItem('rentalId');
+           let confirmDetails = {
+            rentalId :rentalId,
+            paid: true,
+            transactionId: details.id,
+            payerEmail: details.payer.email_address,
+          }
+          this.rentService.ConfirmPayment(confirmDetails).subscribe(() => {
+            this.toastr.success('Payment confirmed!');
+            this.closeModal();
+          });
+        });
+      },
+    }).render('#paypal-button-container');
+  }
+
+  
   closeModal() {
     this.showPayPalModal = false;
   }
