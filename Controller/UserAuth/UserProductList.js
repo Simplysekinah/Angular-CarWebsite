@@ -44,16 +44,24 @@ const rentCar = async (request, response) => {
 // PATCH /rentals/:id/confirm-payment
 const confirmPayment = async (request, response) => {
   try {
-    console.log(request.body);
+    console.log(request.body,'rentals');
     const {rentalId} = request.body;
 
-    const updated = await RentalModel.findByIdAndUpdate(
-      rentalId,
-      { paid: true },
-      { new: true }
-    );
+    const charge = await stripe.charges.create({
+      amount: amount * 100, // Stripe expects cents
+      currency: 'ngn',
+      source: token,
+      description: 'Car Rental Payment'
+    });
+    console.log(charge);
 
-    response.json({ message: 'Payment confirmed and rental updated.', rental: updated });
+    // const updated = await RentalModel.findByIdAndUpdate(
+    //   rentalId,
+    //   { paid: true },
+    //   { new: true }
+    // );
+
+    // response.json({ message: 'Payment confirmed and rental updated.', rental: updated });
   } catch (error) {
     response.status(500).json({ message: 'Error confirming payment', error });
   }
