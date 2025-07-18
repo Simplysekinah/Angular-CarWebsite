@@ -65,6 +65,7 @@ export interface rentCar {
 }
 export interface confirmDetails{
   paid:boolean,
-  transactionId:String,
-  payerEmail:String
+  token:String,
+  amount:String,
+  rentalId:String
 }

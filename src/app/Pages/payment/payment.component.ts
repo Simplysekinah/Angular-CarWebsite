@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { uploadProduct } from '../../Interface/auth';
 import { ProductService } from '../../Service/ProductService/product.service';
@@ -7,10 +7,14 @@ import { FormGroup, FormBuilder, FormsModule, ReactiveFormsModule, Validators } 
 import { ToastrModule, ToastrService } from 'ngx-toastr'
 import { HttpClient } from '@angular/common/http';
 import { CarRentalService } from '../../Service/Car-rental/car-rental.service';
+import { StripeCardElementOptions, StripeElementsOptions, } from '@stripe/stripe-js';
+import { StripeService } from 'ngx-stripe';
+import { StripeCardComponent } from "../../../../node_modules/ngx-stripe/lib/components/card.component";
+
 
 @Component({
   selector: 'app-payment',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, StripeCardComponent],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css'
 })
@@ -20,9 +24,12 @@ export class PaymentComponent {
   backImg = 'back2.png'
   rentalForm!: FormGroup;
   minDate: string = new Date().toISOString().split('T')[0]; // Restrict past// Today's date
+  cardOptions: StripeCardElementOptions = { style: { base: { fontSize: '16px' } } };
+  elementsOptions: StripeElementsOptions = { locale: 'en' };
+@ViewChild(StripeCardComponent) card!: StripeCardComponent;
 
 
-  constructor(private service: ProductService, private rentService: CarRentalService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private toastr: ToastrService, private http: HttpClient) {
+  constructor(private service: ProductService, private rentService: CarRentalService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private toastr: ToastrService, private http: HttpClient,private StripeService:StripeService) {
     this.rentalForm = this.fb.group({
       rentalType: [''], // Stores selected radio option
       pickUpLocation: ['', [Validators.required]],
@@ -118,6 +125,7 @@ export class PaymentComponent {
     console.log(this._id);
     const _id = localStorage.getItem('_id')
     // Ensure no empty values
+    console.log(this.carDetails.price);
     let amount = this.carDetails.price * this.rentalDays
     const formData = { ...this.rentalForm.value, userId: _id, amount: amount, paid: false };
     console.log(formData);
@@ -143,21 +151,38 @@ export class PaymentComponent {
     this.toastr.success('Form Submitted Successfully!');
     console.log('Form Submitted:', formData);
 
-    // Redirect to payment gateway after successful rental submission
-    // if (formData.paymentMethod === 'PayPal') {
-    //   window.location.href = 'http://localhost:5000/pay'; // Replace with actual PayPal route
-    // }
-
-    // Send rental details to backend
+    
     this.rentService.RentCar(formData).subscribe({
       next: (response) => {
         console.log('Payment Response:', response);
         localStorage.setItem('rentalId', response.rentalDetails._id); 
         localStorage.setItem('rentalAmount', response.rentalDetails.amount); 
         this.rentalForm.value == ""
-        this.renderPayPalButton(response.rentalDetails.amount);
-        this.showPayPalModal = true;
-        setTimeout(() => {this.renderPayPalButton(response.rentalDetails.amount)}, 1000);
+        const name = response.rentalDetails.name;
+
+        this.StripeService.createToken(this.card.element, { name }).subscribe(result => {
+          if (result.token) {
+            console.log('Stripe Token:', result.token.id);
+
+            // Now send to your backend
+            this.rentService.ConfirmPayment({
+              paid:false,
+              token: result.token.id,
+              amount: response.rentalDetails.amount,
+              rentalId: response.rentalDetails._id,
+            }).subscribe(() => {
+              this.toastr.success('Stripe Payment successful!');
+            }, err => {
+              this.toastr.error('Stripe Payment failed!');
+              console.error('Stripe Error:', err);
+            });
+
+          } else if (result.error) {
+            this.toastr.error(result.error.message);
+            console.error(result.error.message);
+          }
+        });
+        
       },
       error: (err) => {
         console.error('Payment Error:', err);
@@ -166,34 +191,34 @@ export class PaymentComponent {
     });
   }
 
-  renderPayPalButton(amount: number) {
-    const rentalAmount = localStorage.getItem('rentalAmount');
-    (window as any).paypal.Buttons({
-      createOrder: (data: any, actions: any) => {
-        return actions.order.create({
-          purchase_units: [{ amount: { value: rentalAmount } }],
-        });
-      },
-      onApprove: (data: any, actions: any) => {
-        return actions.order.capture().then((details: any) => {
-          const rentalId = localStorage.getItem('rentalId');
-           let confirmDetails = {
-            rentalId :rentalId,
-            paid: true,
-            transactionId: details.id,
-            payerEmail: details.payer.email_address,
-          }
-          this.rentService.ConfirmPayment(confirmDetails).subscribe(() => {
-            this.toastr.success('Payment confirmed!');
-            this.closeModal();
-          });
-        });
-      },
-    }).render('#paypal-button-container');
-  }
+  // renderPayPalButton(amount: number) {
+  //   const rentalAmount = localStorage.getItem('rentalAmount');
+  //   (window as any).paypal.Buttons({
+  //     createOrder: (data: any, actions: any) => {
+  //       return actions.order.create({
+  //         purchase_units: [{ amount: { value: rentalAmount } }],
+  //       });
+  //     },
+  //     onApprove: (data: any, actions: any) => {
+  //       return actions.order.capture().then((details: any) => {
+  //         const rentalId = localStorage.getItem('rentalId');
+  //          let confirmDetails = {
+  //           rentalId :rentalId,
+  //           paid: true,
+  //           transactionId: details.id,
+  //           payerEmail: details.payer.email_address,
+  //         }
+  //         this.rentService.ConfirmPayment(confirmDetails).subscribe(() => {
+  //           this.toastr.success('Payment confirmed!');
+  //           this.closeModal();
+  //         });
+  //       });
+  //     },
+  //   }).render('paypal-button-container');
+  // }
 
   
-  closeModal() {
-    this.showPayPalModal = false;
-  }
+  // closeModal() {
+  //   this.showPayPalModal = false;
+  // }
 }
