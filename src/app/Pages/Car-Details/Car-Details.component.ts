@@ -15,6 +15,7 @@ export class CarDetailsComponent {
   _id:any;
   carDetails:uploadProduct |any
   backImg = 'back1.png'
+  available:string = ""
 
   constructor(private service: ProductService, private router:Router, private route:ActivatedRoute) { }
   ngOnInit(): void {
@@ -24,10 +25,19 @@ export class CarDetailsComponent {
     this.service.GetProductsbyId(this._id).subscribe((response) => {
       // console.log('Products:', response);
       this.carDetails =response.products
-      console.log(this.carDetails);
+      // console.log(this.carDetails);
+      if (this.carDetails.available == false) {
+      alert('not available')
+      }
     })
   }
   payment(){
-    this.router.navigate([`paymentpage/${this._id}`])
+    if (this.carDetails.available == true) {
+      alert('available')
+      this.router.navigate([`paymentpage/${this._id}`])
+    }else{
+      alert("out of stock")
+    }
+
   }
 }
