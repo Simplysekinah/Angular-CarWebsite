@@ -2,19 +2,20 @@
   <nav class="h-[13vh] shadow-lg bg-slate-100 z-10 sticky top-0 p-5 max-md:h-fit">
     <nav class="flex justify-between items-center">
       <h2 class="text-2xl font-bold text-gray-700">Join RideEase</h2>
-      <div class="relative w-[50%] bg-slate-500">
+      <div class="relative w-[50%] ">
         <div class="border flex items-center rounded-3xl py-2 px-3 w-[100%] justify-between max-lg:hidden">
           <div class="flex items-center w-[100%]">
             <div class="px-2">
               <ng-icon size="20" name="bootstrapSearch" />
             </div>
-            <input #searchBox type="text" placeholder="Start typing to see product results." (keyup)="filterProducts(searchBox.value)"
-              class="outline-none border-none w-[100%] bg-transparent" />
+            <input #searchBox type="text" placeholder="Start typing to see product results."
+              (keyup)="filterProducts(searchBox.value)" class="outline-none border-none w-[100%] bg-transparent" />
           </div>
           <ng-icon size="20" name="bootstrapSliders" />
         </div>
         <ul *ngIf="filteredOptions.length > 0" class="absolute bg-white shadow-md rounded-md w-[100%] z-10">
-          <li *ngFor="let option of filteredOptions" (click)="showCar(option,searchBox)"  class="p-2 hover:bg-gray-100 cursor-pointer">
+          <li *ngFor="let option of filteredOptions" (click)="showCar(option,searchBox)"
+            class="p-2 hover:bg-gray-100 cursor-pointer">
             {{ option }}
           </li>
         </ul>
@@ -45,7 +46,29 @@
         <div class="px-2">
           <ng-icon size="20" name="bootstrapSearch" />
         </div>
-        <input type="text" placeholder="Search" class="outline-none border-none w-[100%] bg-transparent" />
+        <div class="relative w-[50%] bg-slate-500">
+          <div class="border flex items-center rounded-3xl py-2 px-3 w-[100%] justify-between max-lg:hidden">
+            <div class="flex items-center w-[100%]">
+              <div class="px-2">
+                <ng-icon size="20" name="bootstrapSearch" />
+              </div>
+              <input #searchBox type="text" placeholder="Start typing to see product results."
+                (keyup)="filterProducts(searchBox.value)" class="outline-none border-none w-[100%] bg-transparent" />
+            </div>
+            <ng-icon size="20" name="bootstrapSliders" />
+          </div>
+          <ul *ngIf="filteredOptions.length > 0" class="absolute bg-white shadow-md rounded-md w-[100%] z-10">
+            <li *ngFor="let option of filteredOptions" (click)="showCar(option,searchBox)"
+              class="p-2 hover:bg-gray-100 cursor-pointer">
+              {{ option }}
+            </li>
+          </ul>
+
+          <!-- <div *ngIf="filteredOptions.length === 0" class="bg-white text-sm text-gray-500">
+          Start typing to see product results.
+        </div> -->
+          <!-- <div class="absolute left-0 bg-slate-500"></div> -->
+        </div>
       </div>
       <ng-icon size="20" name="bootstrapSliders" />
     </div>
