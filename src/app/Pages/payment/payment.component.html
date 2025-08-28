@@ -205,12 +205,12 @@
                         }
                     </div>
                 </div>
-                  <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+                <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
                 <button [disabled]="rentalForm.valid" (click)="SubmitPayment()">Rent Now</button>
                 <!-- Modal Backdrop -->
-                <div *ngIf="showPayPalModal"
+                <!-- <div *ngIf="showPayPalModal"
                     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <!-- Modal Content -->
+                    Modal Content
                     <div class="bg-white rounded-lg p-6 shadow-lg w-full max-w-md relative">
                         <button class="absolute top-2 right-2 text-gray-500 hover:text-black" >
                             &times;
@@ -218,8 +218,40 @@
                         <h2 class="text-lg font-semibold mb-4">Confirm Payment</h2>
                         <div id="paypal-button-container"></div>
                     </div>
-                </div>
+                </div> -->
+                <!-- Trigger Button -->
 
+                <!-- Modal Overlay -->
+                <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 animate-fade-in"
+                    *ngIf="showModal">
+                    <!-- Modal Container -->
+                    <div
+                        class="bg-white rounded-lg shadow-xl w-full md:max-w-xl mx-auto transition-all animate-fade-in">
+                        <!-- Modal Header -->
+                        <div class="flex justify-between items-center px-6 py-4 border-b">
+                            <h5 class="text-lg font-semibold">Secure Payment</h5>
+                            <button class="text-gray-400 hover:text-gray-600" (click)="closeModal()" aria-label="Close">
+                                &times;
+                            </button>
+                        </div>
+
+                        <!-- Modal Body -->
+                        <div class="px-6 py-4">
+                            <label for="card" class="block mb-2 text-sm font-medium text-gray-700">Card
+                                Information</label>
+                            <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
+                            </ngx-stripe-card>
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <div class="flex justify-end gap-3 px-6 py-4 border-t">
+                            <button class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition"
+                                (click)="closeModal()">Cancel</button>
+                            <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+                                (click)="pay()">Pay Now</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="w-[35%] shadow-lg bg-slate-50 rounded-md p-4 h-fit max-md:w-full" *ngIf="carDetails">

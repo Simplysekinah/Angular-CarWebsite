@@ -29,4 +29,7 @@ export class ProductService {
   GetProductsbyId(_id:String):Observable<any>{
     return this.http.get(`${adminapi.getbyid}${_id}`);
   }
+  GetProductsbyName(name:String):Observable<any>{
+    return this.http.get(`${adminapi.getbyname}${name}`);
+  }
 }

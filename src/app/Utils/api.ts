@@ -1,2 +1,3 @@
-export const main:string = 'https://rideease-simplysekinah.onrender.com/car-ease';
-export const admin:string = 'https://rideease-simplysekinah.onrender.com/adminauth';
+export const main:string = 'http://localhost:5000/car-ease';
+export const admin:string = 'http://localhost:5000/adminauth';
+// http://localhost:4200/signup

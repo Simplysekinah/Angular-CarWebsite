@@ -20,6 +20,7 @@ export const adminapi={
   getproducts: `${admin}/getProduct`,
   getbycategory: `${admin}/getProduct/${categoryP}`,
   getbycategorys: `${admin}/getProduct/${categoryR}`,
+  getbyname: `${admin}/getProductname/`,
   getbyid: `${admin}/getProductbyid/`,
   updateproduct:`${admin}/updateProduct/:id`,
   deleteproduct:`${admin}/deleteProduct/:id`,
