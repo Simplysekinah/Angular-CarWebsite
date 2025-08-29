@@ -9,6 +9,9 @@ import { DashboardsComponent } from './Pages/Admin/dashboards/dashboards.compone
 import { adminGuardGuard } from './Guard/Admin/admin-guard.guard';
 import { CarDetailsComponent } from './Pages/Car-Details/Car-Details.component';
 import { PaymentComponent } from './Pages/payment/payment.component';
+import { CategoryComponent } from './Pages/category/category.component';
+import { FavouritesComponent } from './Pages/favourites/favourites.component';
+import { ProfileComponent } from './Pages/profile/profile.component';
 
 export const routes: Routes = [
   // admin routes
@@ -51,6 +54,18 @@ export const routes: Routes = [
       {
         path:'paymentpage/:_id',
         component:PaymentComponent
+      },
+      {
+        path:'category',
+        component:CategoryComponent
+      },
+      {
+        path:'favourites',
+        component:FavouritesComponent
+      },
+      {
+        path:'profile',
+        component:ProfileComponent
       }
     ]
   }
