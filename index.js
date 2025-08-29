@@ -8,6 +8,8 @@ const orderRouter = require('./Route/car-easeOrder')
 const app = express();
 const port = process.env.PORT
 const cors =require('cors');
+const Stripe = require('stripe')
+const stripe =Stripe(process.env.STRIPE_KEY)
 
 app.use(express.json({extended:true, limit:"100mb"}))
 app.use(express.urlencoded({extended:true, limit:"100mb"}))

@@ -31,7 +31,7 @@ const CreateProducts = async (request, response) => {
 
     const result = await cloudinary.uploader.upload(image);
     const imageUrl = result.secure_url;
-    console.log(imageUrl)
+    // console.log(imageUrl)
 
     const product = await ProductModel.create({
       name,
@@ -70,7 +70,7 @@ const getAllProductsbyCategory = async (request, response) => {
   try {
     const { category } = request.params;
     // console.log(category)
-    console.log(ProductModel);
+    // console.log(ProductModel);
     const products = await ProductModel.find({ category:category });
     // console.log(products,'pro');
     response.status(200).send({ products });
@@ -78,13 +78,29 @@ const getAllProductsbyCategory = async (request, response) => {
     console.log(error);
   }
 };
+
+const getAllProductsbyName = async (request, response) => {
+  try {
+    console.log(request.body);
+    console.log(request.params);
+    const { name } = request.params;
+    console.log(name)
+    // console.log(ProductModel);
+    const products = await ProductModel.find({ name:name });
+    console.log(products,'pro');
+    response.status(200).send({ products });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 const getAllProductsbyId = async (request, response) => {
   try {
     const { _id } = request.params;
     console.log(_id)
     // console.log(ProductModel);
     const products = await ProductModel.findById({_id});
-    console.log(products,'id');
+    // console.log(products,'id');
     response.status(200).send({ products });
   } catch (error) {
     console.log(error);
@@ -138,6 +154,7 @@ module.exports = {
   getAllProducts,
   getAllProductsbyCategory,
   getAllProductsbyId,
+  getAllProductsbyName,
   updateProducts,
   deleteProducts,
 };
