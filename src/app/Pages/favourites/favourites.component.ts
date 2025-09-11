@@ -22,18 +22,6 @@ export class FavouritesComponent {
   id: string[] = []
   carDatas: uploadProduct | any;
   constructor(private carservice: CarRentalService, private router: Router, private service: ProductService) { }
-  // ngOnInit() {
-  //   console.log(this.userId)
-  //   this.carservice.getFavourite(this.userId ).subscribe(response => {
-  //     this.id = response.favorites.map((fav: any) => fav.carId);
-  //     console.log(response)
-  //     console.log(this.id)
-  //   });
-  //   this.service.GetProductsbyIds(this.id).subscribe((response)=>{
-  //     console.log(response.products)
-  //     this.carDatas = response.products
-  //   })
-  // }
 
   ngOnInit() {
     console.log(this.userId);
@@ -53,7 +41,7 @@ export class FavouritesComponent {
           this.carDatas = response.products;
         });
       } else {
-        console.log("No favourite IDs found.");
+        // console.log("No favourite IDs found.");
         this.carDatas = [];
       }
     });

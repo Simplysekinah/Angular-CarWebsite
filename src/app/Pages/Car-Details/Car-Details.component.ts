@@ -1,17 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { uploadProduct } from '../../Interface/auth';
 import { ProductService } from '../../Service/ProductService/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastService, AngularToastifyModule } from 'angular-toastify';
 
 @Component({
   selector: 'app-cardetails',
-  imports: [CommonModule,FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AngularToastifyModule],
   templateUrl: './Car-Details.component.html',
   styleUrl: './Car-Details.component.css'
 })
 export class CarDetailsComponent {
+   private toast = inject(ToastService);
+
   _id:any;
   carDetails:uploadProduct |any
   backImg = 'back1.png'
@@ -27,15 +30,17 @@ export class CarDetailsComponent {
       this.carDetails =response.products
       // console.log(this.carDetails);
       if (this.carDetails.available == false) {
-      alert('not available')
+        this.toast.error('Not Available')
+      // alert('not available')
       }
     })
   }
   payment(){
     if (this.carDetails.available == true) {
-      alert('available')
+      // alert('available')
       this.router.navigate([`paymentpage/${this._id}`])
     }else{
+      this.toast.error('out of stock')
       alert("out of stock")
     }
 

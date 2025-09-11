@@ -1,19 +1,21 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthService } from '../../Service/Auth/auth.service';
 import { main } from '../../Utils/api';
 import { api } from '../../Api/api';
 import { Router } from '@angular/router';
+import { AngularToastifyModule, ToastService } from 'angular-toastify';
 // import { on } from 'events';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, NgClass, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, NgClass, CommonModule, ReactiveFormsModule,AngularToastifyModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
+   private toast = inject(ToastService);
   showLogin = false;
   showForgotPassword = false;
   showOTP = false;
@@ -71,8 +73,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('first')
-    console.log(this.SignupForm.value);
+    // this.toast.success('welcome')
+    // console.log('first')
+    // console.log(this.SignupForm.value);
     this.submitted = true;
     // console.log(this.service.Signup(this.SignupForm.value));
 
@@ -81,11 +84,13 @@ export class LoginComponent implements OnInit {
     }
     this.service.Signup(this.SignupForm.value).subscribe((response)=>{
       console.log(response)
-      this.success = 'Signup successful';
+      this.toast.success('Signup successful');
         this.toggleForm(); // Call toggleForm after successful signup
     },
     (error) => {
-      console.error('Signup failed:', error)});
+      console.error('Signup failed:', error.error.message)
+      this.toast.error(error.error.message)
+    });
   }
 
   onLogin() {
@@ -98,37 +103,41 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.service.Signin(this.LoginForm.value).subscribe((response)=>{
-      console.log(response)
-      console.log(response.user._id)
+      // console.log(response)
+      // console.log(response.user._id)
       localStorage.setItem('_id',response.user._id)
-      this.success = 'Signin successful';
+      this.toast.success('Signin successful');
       this.router.navigate(['/dashboard'])
     },
     (error) => {
-      console.error('Signup failed:', error)});
+      // console.error('Signup failed:', error.error.message)
+      this.toast.error(error.error.message)
+    });
   }
 
   onForgotPassword() {
-    console.log('first')
-    console.log(this.ForgetPasswordForm.value);
+    // console.log('first')
+    // console.log(this.ForgetPasswordForm.value);
     this.submitted = true;
 
     if (this.ForgetPasswordForm.invalid) {
       return;
     }
     this.service.ForgetPassword(this.ForgetPasswordForm.value).subscribe((response)=>{
-      console.log(response)
-      this.success = 'Email Received';
+      // console.log(response)
+      this.toast.success('Email Received');
       localStorage.setItem('email', this.ForgetPasswordForm.value.email);
       this.showOTPForm();
     },
     (error) => {
-      console.error('Email failed:', error)});
+      // console.error('Email failed:', error)
+      this.toast.error(error.error.message)
+    });
   }
 
   onOTPVerification() {
-    console.log('first')
-    console.log(this.OTPForm.value);
+    // console.log('first')
+    // console.log(this.OTPForm.value);
     this.submitted = true;
 
     if (this.OTPForm.invalid) {
@@ -136,25 +145,27 @@ export class LoginComponent implements OnInit {
     }
     const otp = this.OTPForm.value.otp1 + this.OTPForm.value.otp2 + this.OTPForm.value.otp3 + this.OTPForm.value.otp4;
     this.OTPForm.value.otp = otp;
-    console.log(otp)
-    console.log(this.OTPForm.value.otp)
+    // console.log(otp)
+    // console.log(this.OTPForm.value.otp)
     // this.OTPForm.value.email = this.ForgetPasswordForm.value.email;
     let email =localStorage.getItem('email');
     let e = {email: email, otp: otp};
-    console.log(e)
+    // console.log(e)
     this.service.ResetPassword(e).subscribe((response)=>{
-      console.log(response)
-      this.success = 'Email Received';
+      // console.log(response)
+      this.toast.success('Email Received');
       localStorage.setItem('otp', e.otp);
       this.showResetPasswordForm();
     },
     (error) => {
-      console.error('Email failed:', error)});
+      // console.error('Email failed:', error)
+      this.toast.error(error.error.message)
+    });
   }
 
   onResetPassword() {
-    console.log('first')
-    console.log(this.OTPForm.value);
+    // console.log('first')
+    // console.log(this.OTPForm.value);
     this.submitted = true;
 
     let email =localStorage.getItem('email');
@@ -162,18 +173,20 @@ export class LoginComponent implements OnInit {
     if (this.ResetPasswordForm.invalid) {
       return;
     }else if(this.ResetPasswordForm.value.password != this.ResetPasswordForm.value.reset){
-      this.success = 'Password does not match';
+      this.toast.success('Password does not match');
       return;
     }
     let e = {email: email, otp: otp, password: this.ResetPasswordForm.value.password};
-    console.log(e)
+    // console.log(e)
     this.service.VerifyPassword(e).subscribe((response)=>{
-      console.log(response)
-      this.success = 'Password Reset Successful';
+      // console.log(response)
+      this.toast.success('Password Reset Successful');
       this.backToLogin();
     },
     (error) => {
-      console.error('Password Reset Failed:', error)});
+      // console.error('Password Reset Failed:', error)
+      this.toast.error(error.error.message)
+    });
   }
 
   toggleForm() {
@@ -216,11 +229,12 @@ export class LoginComponent implements OnInit {
     if(token){
       this.service.getUserData().subscribe((response)=>{
         console.log(response);
+        this.toast.success(response.message)
         this.router.navigate(['/dashboard'])
       },
       (error) => {
         console.error('Failed:', error)
-        this.success = 'Session Expired';
+        this.toast.error(`Session Expired ${error.error.message}`);
         this.router.navigate(['/signup'])
       });
     }else{

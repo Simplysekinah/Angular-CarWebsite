@@ -36,16 +36,16 @@ export class CategoryComponent {
     this.carData = this.filteredOptions
   }
   handleCarSelection(_id: string) {
-    console.log("Selected Car ID:", _id);
+    // console.log("Selected Car ID:", _id);
     this._id = _id
-    console.log(_id);
+    // console.log(_id);
     this.router.navigate([`/carDetails/${this._id}`])
     // this.service.GetProductsbyId(_id).subscribe((response) => {
     //   console.log('Products:', response);
     // })
   }
   favourite(_id:string){
-    console.log(_id);
+    // console.log(_id);
     this.isfavourites =!this.isfavourites
   }
 }

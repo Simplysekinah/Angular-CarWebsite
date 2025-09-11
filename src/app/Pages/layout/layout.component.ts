@@ -58,7 +58,7 @@ export class LayoutComponent {
       this._id = response.products[0]._id
       this.filteredOptions = []
       this.productOptions = []
-      console.log(this.inputText);
+      // console.log(this.inputText);
       searchBox.value = ""
       this.router.navigate([`/carDetails/${this._id}`])
     })

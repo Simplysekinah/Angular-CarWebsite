@@ -48,12 +48,12 @@ export class DashboardComponent {
   });
   }
   onClickRent() {
-    console.log('object');
+    // console.log('object');
   }
   handleCarSelection(_id: string) {
-    console.log("Selected Car ID:", _id);
+    // console.log("Selected Car ID:", _id);
     this._id = _id
-    console.log(_id);
+    // console.log(_id);
     this.router.navigate([`/carDetails/${this._id}`])
   }
 
@@ -70,7 +70,7 @@ export class DashboardComponent {
       } else {
         this.isfavourites.add(this.carId);
       }
-      console.log(response)
+      // console.log(response)
     })
 
 

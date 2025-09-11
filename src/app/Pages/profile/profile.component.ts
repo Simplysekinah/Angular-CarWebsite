@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../Service/Auth/auth.service';
 import { UserInterface } from '../../Interface/auth';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastService, AngularToastifyModule } from 'angular-toastify';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, AngularToastifyModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
+   private toast = inject(ToastService);
+
   _id: any = localStorage.getItem('_id')
   user: UserInterface | any
   updateForm!: FormGroup;
@@ -22,10 +25,10 @@ export class ProfileComponent {
     if (this._id.length > 0) {
       this.userservice.getUser(this._id).subscribe((response) => {
         this.user = response.user
-        console.log(this.user);
+        // console.log(this.user);
       })
     } else {
-      console.log("no id found");
+      // console.log("no id found");
     }
 
     this.updateForm = this.FB.group({
@@ -53,11 +56,11 @@ export class ProfileComponent {
         // Optional: update preview immediately
         this.user.profilePic = base64Image;
 
-        console.log('Base64 image:', base64Image);
+        // console.log('Base64 image:', base64Image);
       };
 
       reader.onerror = (error) => {
-        console.error('Error reading file:', error);
+        // console.error('Error reading file:', error);
       };
 
       reader.readAsDataURL(file); // ✅ Use this for images
@@ -66,7 +69,11 @@ export class ProfileComponent {
   updateProfile() {
     console.log(this.updateForm.value);
     this.userservice.updateUser(this.updateForm.value).subscribe((response) => {
-      console.log(response);
-    })
+      // console.log(response);
+    },
+    (error)=>{
+      this.toast.error(error.error.message)
+    }
+  )
   }
 }
