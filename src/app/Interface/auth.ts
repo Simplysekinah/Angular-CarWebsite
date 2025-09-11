@@ -3,6 +3,8 @@ export interface UserInterface {
   username: string;
   email: string;
   password: string;
+  _id?:string;
+  picture?:string;
 }
 export interface Login {
   email: string;
@@ -68,4 +70,8 @@ export interface confirmDetails{
   token:String,
   amount:String,
   rentalId:String
+}
+export interface favourite{
+  userId:String,
+  carId:String
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { confirmDetails, rentCar } from '../../Interface/auth';
+import { confirmDetails, favourite, rentCar } from '../../Interface/auth';
 import { adminapi, api } from '../../Api/api';
 import { Observable } from 'rxjs';
 
@@ -9,12 +9,19 @@ import { Observable } from 'rxjs';
 })
 export class CarRentalService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  RentCar(rentCar:rentCar):Observable<any>{
-    return this.http.post(api.rentaldetails,rentCar);
+  RentCar(rentCar: rentCar): Observable<any> {
+    return this.http.post(api.rentaldetails, rentCar);
   }
-  ConfirmPayment(confirmDetails:confirmDetails):Observable<any>{
-    return this.http.post(api.confirmdetails,confirmDetails);
+  ConfirmPayment(confirmDetails: confirmDetails): Observable<any> {
+    return this.http.post(api.confirmdetails, confirmDetails);
+  }
+
+  addFavourite( favourite: favourite):Observable<any>{
+    return this.http.post(api.getfavourite,favourite)
+  }
+  getFavourite( userId:string):Observable<any>{
+    return this.http.post(api.fetchfavourite,{userId})
   }
 }

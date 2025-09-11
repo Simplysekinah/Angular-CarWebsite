@@ -47,4 +47,11 @@ export class AuthService {
   getUserData(): Observable<any> {
     return this.http.get(api.homepage, { headers: this.getAuthHeaders() });
   }
+
+  getUser(_id:String): Observable<any> {
+    return this.http.post(api.getuser, {_id});
+  }
+  updateUser (UserInterface:UserInterface):Observable<any>{
+    return this.http.post(api.updateuser,UserInterface)
+  }
 }

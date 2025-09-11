@@ -6,7 +6,7 @@
                 <p>{{car.type}}</p>
             </div>
             <div (click)="favourite($event)">
-                <ng-icon name="bootstrapHeart" />
+                <ng-icon [name]=" isfavourites ? 'bootstrapHeartFill' : 'bootstrapHeart'" />
             </div>
         </div>
         <img [src]="car.image" alt="{{ car.name }}" class="w-full h-48 object-fit rounded-md">

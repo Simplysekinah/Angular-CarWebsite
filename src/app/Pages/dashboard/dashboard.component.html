@@ -38,7 +38,7 @@
             <h4>Popular car</h4>
             <div class="flex gap-3 overflow-auto p-3 no-scroll">
                 <ng-container *ngFor="let car of carData" >
-                    <app-car-card [car]="car" (carSelected)="handleCarSelection($event)" (favourites)="favourite($event)"></app-car-card>
+                    <app-car-card [isfavourites]="isfavourites.has(car._id)" [car]="car" (carSelected)="handleCarSelection($event)" (favourites)="favourite($event)"></app-car-card>
                 </ng-container>
             </div>
         </div>
@@ -46,7 +46,7 @@
             <h4>Recommendation Car</h4>
             <div class="flex gap-3 overflow-auto p-3 no-scroll">
                 <ng-container *ngFor="let car of carDatas">
-                    <app-car-card [car]="car" (carSelected)="handleCarSelection($event)" (favourites)="favourite($event)"></app-car-card>
+                    <app-car-card [isfavourites]="isfavourites.has(car._id)" [car]="car" (carSelected)="handleCarSelection($event)" (favourites)="favourite($event)"></app-car-card>
                 </ng-container>
             </div>
         </div>

@@ -1,1 +1,18 @@
-<p>category works!</p>
+<main class="flex flex-col p-3">
+    <aside class="flex gap-4">
+        <button (click)="changeCar('Sport')">Sport</button>
+        <button (click)="changeCar('SUV')">Suv</button>
+        <button (click)="changeCar('Sedan')">Sedan</button>
+        <button (click)="changeCar('Hatchback')">hatchback</button>
+    </aside>
+    <section>
+        <div class="flex flex-col gap-3">
+            <div class="flex gap-3 overflow-auto p-3 no-scroll">
+                <ng-container *ngFor="let car of carData" >
+                    <!-- <h4>{{car.name}}</h4> -->
+                    <app-car-card [car]="car" (carSelected)="handleCarSelection($event)" (favourites)="favourite($event)"></app-car-card>
+                </ng-container>
+            </div>
+        </div>
+    </section>
+</main>

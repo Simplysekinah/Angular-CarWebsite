@@ -66,8 +66,15 @@ export class LayoutComponent {
 
   toggleIcon(tab: string) {
     this.activeTab = tab
-    if (tab == "category") {
+    if (tab == "home") {
+        this.router.navigate(['/dashboard'])
+    }
+    else if (tab == "category") {
         this.router.navigate(['/category'])
+    }else if (tab == "favourite") {
+        this.router.navigate(['/favourites'])
+    }else if (tab == "setting") {
+        this.router.navigate(['/profile'])
     }
   }
 }

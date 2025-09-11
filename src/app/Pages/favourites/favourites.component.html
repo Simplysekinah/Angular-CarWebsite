@@ -1,1 +1,6 @@
-<p>favourites works!</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-wrap p-3">
+    <ng-container *ngFor="let car of carDatas">
+        <app-car-card [isfavourites]="isfavourites.has(car._id)" [car]="car" (carSelected)="handleCarSelection($event)"
+            (favourites)="favourite($event)"></app-car-card>
+    </ng-container>
+</div>

@@ -9,6 +9,15 @@ import { admin } from '../../Utils/api';
   providedIn: 'root',
 })
 export class ProductService {
+  // removeFavorite(carId: string, userId: any) {
+  //   throw new Error('Method not implemented.');
+  // }
+  // removeFavorite(_id: string, String: StringConstructor) {
+  //   throw new Error('Method not implemented.');
+  // }
+  // addFavorite(_id: string, userId: any) {
+  //   throw new Error('Method not implemented.');
+  // }
   //  id ='popular';
 // const categoryR ='recommendation';
   constructor(private http: HttpClient) {}
@@ -29,7 +38,11 @@ export class ProductService {
   GetProductsbyId(_id:String):Observable<any>{
     return this.http.get(`${adminapi.getbyid}${_id}`);
   }
+  GetProductsbyIds(id:String[]):Observable<any>{
+    return this.http.post(adminapi.getbyids, {id});
+  }
   GetProductsbyName(name:String):Observable<any>{
     return this.http.get(`${adminapi.getbyname}${name}`);
   }
+  
 }
