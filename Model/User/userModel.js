@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+     picture: {
+    type: String, // store image URL
+    default: "https://images.pexels.com/photos/14157139/pexels-photo-14157139.jpeg"
+  },
     isAdmin:{
         type:Boolean,
         default:false

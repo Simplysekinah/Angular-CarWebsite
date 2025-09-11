@@ -1,11 +1,12 @@
-const express =require('express')
-const bcrypt =require('bcryptjs')
+const express = require('express')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const userModel = require('../../Model/User/userModel')
-const { generateToken,verifyToken } = require('../../Service/SessionService')
-const {forgotPasswordModel} = require('../../Model/User/ForgotpasswordModel')
-const {forgotPasswordMail,SendMail} = require('../../Utils/mailer')
-const {generateCode} = require('../../Config/User/codeGenerator')
+const { generateToken, verifyToken } = require('../../Service/SessionService')
+const { forgotPasswordModel } = require('../../Model/User/ForgotpasswordModel')
+const { forgotPasswordMail, SendMail } = require('../../Utils/mailer')
+const { generateCode } = require('../../Config/User/codeGenerator')
+const {cloudinary} = require("../../Config/User/Cloudinary")
 
 const signup = async (request, response, next) => {
     console.log(request.body);
@@ -87,7 +88,7 @@ const verifyPassword = async (request, response, next) => {
         console.log(request.body)
         const { email, OTP } = request.body;
         const findOTP = await forgotPasswordModel.findOne({ email: email })
-        console.log(findOTP,'fineotp');
+        console.log(findOTP, 'fineotp');
         if (!findOTP) {
             return response.status(404).send({ message: "Invalid OTP", status: false })
         }
@@ -118,6 +119,56 @@ const resetPassword = async (request, response, next) => {
     } catch (error) {
         next(error)
     }
+
 }
 
-module.exports = {signup,signin,tokenverification,forgotPassword,resetPassword,verifyPassword}
+const getUser = async (request, response, next) => {
+    try {
+        console.log(request.body);
+        const { _id } = request.body
+        console.log(_id)
+        const user = await userModel.findById(_id)
+        if (!user) {
+            return response.status(404).send({ message: "No user Found" })
+        }
+        return response.status(200).send({ message: "user fetched", user })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const userInfo = async (request, response, next) => {
+    try {
+        const { fullname, username, email, password, picture, _id } = request.body
+        console.log(request.body);
+        const user = await userModel.findById({ _id: _id })
+        console.log('user',user);
+        if (!user) {
+            return response.status(404).send({ message: "User does not exist", status: false })
+        }
+
+        const profilepicture = await cloudinary.uploader.upload(picture)
+        console.log("profilepicture:", profilepicture);
+        let update = {
+            picture: profilepicture.secure_url,
+            fullname: fullname,
+            username: username,
+            email: email,
+            password: password,
+        }
+
+        const personal = await userModel.findByIdAndUpdate(
+            { _id: user._id },
+            { $set: update },
+            { new: true })
+        if (!personal) {
+            return response.status(401).send({ message: "error occured" })
+        }
+        console.log(personal);
+        return response.status(200).send({ personal })
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = { signup, signin,userInfo, tokenverification, forgotPassword, resetPassword, verifyPassword, getUser }

@@ -4,6 +4,7 @@ require('dotenv').config()
 const userRouter = require('./Route/User/car-easeRouter')
 const adminRouter = require('./Route/Admin/car-easeProduct')
 const orderRouter = require('./Route/car-easeOrder')
+const favRouter = require('./Route/car-easeCart')
 
 const app = express();
 const port = process.env.PORT
@@ -14,7 +15,7 @@ const stripe =Stripe(process.env.STRIPE_KEY)
 app.use(express.json({extended:true, limit:"100mb"}))
 app.use(express.urlencoded({extended:true, limit:"100mb"}))
 app.use((cors({origin: "*"})))
-app.use("/car-ease",userRouter,orderRouter)
+app.use("/car-ease",userRouter,orderRouter,favRouter)
 app.use("/adminauth",adminRouter)
 
 const uri = process.env.MONGO_URI

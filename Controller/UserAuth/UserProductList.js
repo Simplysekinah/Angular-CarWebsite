@@ -3,9 +3,11 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const RentalModel = require('../../Model/OrderModel')
 const UserModel = require('../../Model/User/userModel')
+const Favorite = require('../../Model/User/Favourites')
 const { default: Stripe } = require('stripe')
 const ProductModel = require('../../Model/Products/ProductsModel')
 const stripe = Stripe(process.env.STRIPE_KEY)
+const mongoose =require('mongoose');
 
 
 const rentCar = async (request, response) => {
@@ -85,4 +87,44 @@ const confirmPayment = async (request, response) => {
   }
 };
 
-module.exports = { rentCar, confirmPayment }
+
+const addFavorite = async (req, res) => {
+  try {
+    const { userId, carId } = req.body;
+
+    // Check if the favorite already exists
+    const existing = await Favorite.findOne({ userId, carId });
+
+    if (existing) {
+      // If it exists, remove it
+      await Favorite.findOneAndDelete({ userId, carId });
+      return res.status(200).json({ message: 'Removed from favorites' });
+    } else {
+      // If it doesn't exist, add it
+      const favorite = new Favorite({ userId, carId });
+      await favorite.save();
+      return res.status(201).json({ message: 'Added to favorites', favorite });
+    }
+  } catch (error) {
+    console.error('Toggle error:', error);
+    return res.status(500).json({ message: 'Server error', error });
+  }
+};
+
+const getUserFavorites = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid userId" });
+    }
+
+    const favorites = await Favorite.find({ userId: new mongoose.Types.ObjectId(userId) })
+      .populate("carId"); // optional: populate car details if needed
+
+    res.status(200).json({ favorites });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+module.exports = { rentCar, confirmPayment,addFavorite,getUserFavorites }

@@ -106,6 +106,19 @@ const getAllProductsbyId = async (request, response) => {
     console.log(error);
   }
 };
+const getAllProductsbyIds = async (request, response) => {
+  try {
+    // console.log(request.body)
+    const { id } = request.body;
+    // console.log(id,'id')
+    // console.log(ProductModel);
+    const products = await ProductModel.find({_id:{ $in: id }});
+    // console.log(products,'id');
+    response.status(200).send({ products });
+  } catch (error) {
+    console.log(error);
+  }
+};
 const updateProducts = async (request, response) => {
   try {
     const { id } = request.params;
@@ -154,6 +167,7 @@ module.exports = {
   getAllProducts,
   getAllProductsbyCategory,
   getAllProductsbyId,
+  getAllProductsbyIds,
   getAllProductsbyName,
   updateProducts,
   deleteProducts,

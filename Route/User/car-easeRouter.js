@@ -1,5 +1,5 @@
 const express =require('express')
-const { signup, signin, forgotPassword, verifyPassword, resetPassword, tokenverification } = require('../../Controller/UserAuth/UserAuthController')
+const { signup, signin, forgotPassword, verifyPassword, resetPassword, tokenverification, getUser, userInfo } = require('../../Controller/UserAuth/UserAuthController')
 const {validate} =require('../../Middleware/Admin/adminValidator');
 const { userValidator, loginValidator } = require('../../Middleware/User/userValidate');
 const Router =express.Router()
@@ -10,6 +10,8 @@ Router.get("/homepage", tokenverification)
 Router.post("/forget",forgotPassword)
 Router.post("/verify",verifyPassword)
 Router.post("/reset",resetPassword)
+Router.post("/getuser",getUser)
+Router.post("/updateuser",userInfo)
 
 
 module.exports = Router
