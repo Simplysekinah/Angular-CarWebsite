@@ -72,10 +72,10 @@ const confirmPayment = async (request, response) => {
       { new: true }
     );
     console.log('updated',updated);
-    if (updated.paid === true && updated.rentalId) {
+    if (updated.paid === true && updated._id) {
       console.log(updated.rentalId,'rentalid');
       await ProductModel.findByIdAndUpdate(
-        {_id: new mongoose.Types.ObjectId(updated.rentalId)},
+        {_id: new mongoose.Types.ObjectId(updated._id)},
         { available: false },
         {new:true}
       );
