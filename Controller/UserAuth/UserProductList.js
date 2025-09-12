@@ -58,7 +58,7 @@ const confirmPayment = async (request, response) => {
       source: token,
       description: 'Car Rental Payment'
     });
-    console.log(charge);
+    console.log(charge,'charge');
 
     const updated = await RentalModel.findByIdAndUpdate(
       rentalId,
@@ -71,7 +71,7 @@ const confirmPayment = async (request, response) => {
       },
       { new: true }
     );
-
+    console.log('updated',updated);
     if (updated.paid === true && updated.rentalId) {
       console.log(updated.rentalId,'rentalid');
       await ProductModel.findByIdAndUpdate(
