@@ -41,7 +41,7 @@ export class CarDetailsComponent {
       this.router.navigate([`paymentpage/${this._id}`])
     }else{
       this.toast.error('out of stock')
-      alert("out of stock")
+      // alert("out of stock")
     }
 
   }
