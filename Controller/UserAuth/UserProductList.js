@@ -50,7 +50,7 @@ const rentCar = async (request, response) => {
 const confirmPayment = async (request, response) => {
   try {
     console.log(request.body, 'rentals');
-    const { rentalId, amount, paid, token } = request.body;
+    const { rentalId, amount, paid, token,carId } = request.body;
 
     const charge = await stripe.charges.create({
       amount: amount * 1000, // Stripe expects cents
@@ -73,9 +73,10 @@ const confirmPayment = async (request, response) => {
     );
     console.log('updated',updated);
     if (updated.paid === true && updated._id) {
-      console.log(updated.rentalId,'rentalid');
+      console.log(updated._id,'rentalid');
+      console.log(carId,'carid');
       await ProductModel.findByIdAndUpdate(
-        {_id: new mongoose.Types.ObjectId(updated._id)},
+        {_id: new mongoose.Types.ObjectId(carId)},
         { available: false },
         {new:true}
       );
