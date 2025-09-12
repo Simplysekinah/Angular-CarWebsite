@@ -145,7 +145,7 @@
                         <option value="paypal">PayPal</option>
                         <option value="paypal">Bitcoin</option>
                     </select>
-                    <div class="flex flex-wrap justify-between">
+                    <!-- <div class="flex flex-wrap justify-between">
                         <div class="flex flex-col w-[49%]">
                             <label for="">Name</label>
                             <input type="text" placeholder="Your name"
@@ -166,7 +166,7 @@
                             <input type="text" placeholder="Town or City"
                                 class="bg-[#FFFFFF] rounded-md border-none outline-none">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- <div class="flex flex-col gap-3">
                     <div class="flex justify-between shadow-lg rounded-md bg-[#90A3BF] p-3">
@@ -206,7 +206,7 @@
                     </div>
                 </div>
                 <!-- <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card> -->
-                <button [disabled]="rentalForm.valid" (click)="SubmitPayment()">Rent Now</button>
+                <button [disabled]="rentalForm.valid" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-6 my-3" (click)="SubmitPayment()">Rent Now</button>
                 <!-- Modal Backdrop -->
                 <!-- <div *ngIf="showPayPalModal"
                     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -252,9 +252,9 @@
 
                         <!-- Modal Footer -->
                         <div class="flex justify-end gap-3 px-6 py-4 border-t">
-                            <button class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 transition"
+                            <button class="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded  transition"
                                 (click)="closeModal()">Cancel</button>
-                            <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+                            <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded  transition"
                                 (click)="pay()">Pay Now</button>
                         </div>
                     </div>
@@ -289,10 +289,10 @@
                             <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions">
                             </ngx-stripe-card>
                         </div> -->
-                        <img src="payment-successful.png" alt="" class="w-[80%]">
+                        <img src="payment-successful.png" alt="" class="w-[80%] flex justify-center items-center">
                         <!-- Modal Footer -->
                         <div class="flex justify-end gap-3 px-6 py-4 border-t">
-                            <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+                            <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded  transition"
                                 (click)="continue()">Continue</button>
                         </div>
                     </div>
