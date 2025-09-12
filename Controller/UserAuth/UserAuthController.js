@@ -146,7 +146,8 @@ const userInfo = async (request, response, next) => {
         if (!user) {
             return response.status(404).send({ message: "User does not exist", status: false })
         }
-
+        let saltround = 10
+        const pass = await bcrypt.hash(password,saltround)
         const profilepicture = await cloudinary.uploader.upload(picture)
         console.log("profilepicture:", profilepicture);
         let update = {
@@ -154,7 +155,7 @@ const userInfo = async (request, response, next) => {
             fullname: fullname,
             username: username,
             email: email,
-            password: password,
+            password: pass,
         }
 
         const personal = await userModel.findByIdAndUpdate(
