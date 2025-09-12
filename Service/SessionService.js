@@ -8,9 +8,9 @@ const generateToken = (email) => {
         return token
     } catch (error) {
         console.log(error)
-        throw{
-            name:"FailedTokenGenerationError",
-            message:"Failed to generate user token",
+        throw {
+            name: "FailedTokenGenerationError",
+            message: "Failed to generate user token",
             error
         }
     }
@@ -23,11 +23,20 @@ const verifyToken = (token) => {
         return email
     } catch (error) {
         console.log(error)
-        throw{
-            name:"FailedTokenVerificationError",
-            message:"Authentication error",
-            error
-        } 
+        if (error.name === 'TokenExpiredError') {
+            throw {
+                name: 'TokenExpiredError',
+                message: 'Session expired. Please log in again.',
+                error
+            };
+        } else {
+            throw {
+                name: 'FailedTokenVerificationError',
+                message: 'Invalid or Authentication error.',
+                error
+            };
+        }
+
     }
 }
 
