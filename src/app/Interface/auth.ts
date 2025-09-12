@@ -69,7 +69,8 @@ export interface confirmDetails{
   paid:boolean,
   token:String,
   amount:String,
-  rentalId:String
+  rentalId:String,
+  carId:String
 }
 export interface favourite{
   userId:String,

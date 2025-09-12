@@ -232,7 +232,8 @@ export class PaymentComponent {
           paid: false,
           token: result.token.id,
           amount: this.Response.rentalDetails.amount,
-          rentalId: this.Response.rentalDetails._id
+          rentalId: this.Response.rentalDetails._id,
+          carId:this._id
         }).subscribe((response) => {
           // console.log(response);
           this.toast.success('Stripe Payment successful!');
