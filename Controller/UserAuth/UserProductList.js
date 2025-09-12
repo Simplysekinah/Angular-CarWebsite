@@ -12,7 +12,7 @@ const mongoose =require('mongoose');
 
 const rentCar = async (request, response) => {
   try {
-    console.log(request.body);
+    // console.log(request.body);
     const { userId, rentalType,
       names,
       phoneN,
@@ -28,14 +28,14 @@ const rentCar = async (request, response) => {
       terms,
       amount
     } = request.body
-    console.log(userId);
+    console.log(userId,'userid');
     if (!userId) {
       return response.status(400).json({ message: 'User ID is required!' });
     }
-    console.log(request.body);
+    // console.log(request.body);
 
     const user = await UserModel.findById({ _id: userId });
-    console.log(user);
+    console.log(user,'users');
     if (!user) return response.status(404).json({ message: 'User not found' });
 
     const rental = request.body;
