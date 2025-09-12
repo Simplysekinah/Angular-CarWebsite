@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { uploadProduct } from '../../Interface/auth';
 import { ProductService } from '../../Service/ProductService/product.service';
@@ -9,16 +9,18 @@ import { HttpClient } from '@angular/common/http';
 import { CarRentalService } from '../../Service/Car-rental/car-rental.service';
 import { StripeCardElementOptions, StripeElementsOptions, } from '@stripe/stripe-js';
 import { StripeService, StripeCardComponent, NgxStripeModule } from 'ngx-stripe';
+import { ToastService, AngularToastifyModule } from 'angular-toastify';
 // import { StripeCardComponent } from "../../../../node_modules/ngx-stripe/lib/components/card.component";
 
 
 @Component({
   selector: 'app-payment',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxStripeModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgxStripeModule, AngularToastifyModule],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.css'
 })
 export class PaymentComponent {
+  private toast = inject(ToastService);
   _id: any;
   carDetails: uploadProduct | any
   backImg = 'back2.png'
@@ -27,6 +29,7 @@ export class PaymentComponent {
   // cardOptions: StripeCardElementOptions = { style: { base: { fontSize: '16px' } } };
   // elementsOptions: StripeElementsOptions = { locale: 'en' };
   showModal = false;
+  showModals = false;
   Response:object  |any
 
   cardOptions: StripeCardElementOptions = {
@@ -172,13 +175,13 @@ export class PaymentComponent {
     }
 
     // Notify user of successful submission
-    this.toastr.success('Form Submitted Successfully!');
+    this.toast.success('Form Submitted Successfully!');
     console.log('Form Submitted:', formData);
 
 
     this.rentService.RentCar(formData).subscribe({
       next: (response) => {
-        console.log('Payment Response:', response);
+        // console.log('Payment Response:', response);
         localStorage.setItem('rentalId', response.rentalDetails._id);
         localStorage.setItem('rentalAmount', response.rentalDetails.amount);
         this.Response = response
@@ -213,8 +216,8 @@ export class PaymentComponent {
 
       },
       error: (err) => {
-        console.error('Payment Error:', err);
-        this.toastr.error('Payment Failed!');
+        // console.error('Payment Error:', err);
+        this.toast.error('Payment Failed!');
       },
     });
   }
@@ -222,7 +225,7 @@ export class PaymentComponent {
     const name = this.Response.rentalDetails.names;
     this.StripeService.createToken(this.card.element, { name }).subscribe(result => {
       if (result.token) {
-        console.log('Stripe Token:', result.token.id);
+        // console.log('Stripe Token:', result.token.id);
 
         // Now send to your backend
         this.rentService.ConfirmPayment({
@@ -231,18 +234,22 @@ export class PaymentComponent {
           amount: this.Response.rentalDetails.amount,
           rentalId: this.Response.rentalDetails._id
         }).subscribe((response) => {
-          console.log(response);
-          this.toastr.success('Stripe Payment successful!');
+          // console.log(response);
+          this.toast.success('Stripe Payment successful!');
+          this.showModals = true
         }, err => {
-          this.toastr.error('Stripe Payment failed!');
+          this.toast.error('Stripe Payment failed!');
           console.error('Stripe Error:', err);
         });
 
       } else if (result.error) {
-        this.toastr.error(result.error.message);
+        // this.toast.error(result.error.message);
         console.error(result.error.message);
       }
     });
   }
 
+  continue(){
+    this.router.navigate(['/dashboard'])
+  }
 }
