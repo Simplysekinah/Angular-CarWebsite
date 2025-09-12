@@ -75,7 +75,8 @@ const confirmPayment = async (request, response) => {
     if (updated.paid === true && updated.rentalId) {
       await ProductModel.findByIdAndUpdate(
         updated.rentalId,
-        { available: false }
+        { available: false },
+        {new:true}
       );
     }
 
